@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+:root {
+    --neon-green: #39FF14;
+    --neon-blue: #00FFFF;
+    --neon-red: #FF073A;
+    --bg-color: #000000;
+}
+
+* {
+    box-sizing:border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'VT323', monospace;
+    background-color: var(--bg-color);
+    color: var(--neon-green);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    user-select: none;
+    cursor: url('cursorarrow.png'), auto;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#welcome-screen {
+    display: flex;
+}
+
+h1, h2, h3 {
+    text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+}
+
+p {
+    font-size: 1.25rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+#slogan-display {
+    white-space: pre;
+    min-height: 1.5rem;
+}
+
+.blinking-cursor {
+    font-weight: 100;
+    font-size: 1.5rem;
+    color: var(--neon-green);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+#hidden-button {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: transparent;
+    cursor: url('cursorhand.png'), auto;
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+    box-shadow: 0 0 10px var(--neon-green);
+}
+
+#hidden-button:hover {
+    opacity: 0.3;
+    box-shadow: 0 0 20px var(--neon-green);
+}
+
+.fake-buttons-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 5;
+    padding-top: 20px;
+}
+
+.fake-button {
+    pointer-events: auto;
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid var(--neon-red);
+    color: var(--neon-red);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+    cursor: url('cursorhand.png'), auto;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 5px var(--neon-red);
+    opacity: 0.8;
+}
+
+.fake-button:hover {
+    box-shadow: 0 0 15px var(--neon-red);
+    transform: scale(1.05);
+}
+
+.glitch-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+.glitch-lines span {
+    position: absolute;
+    background: var(--neon-green);
+    animation: glitch-anim 2s infinite linear alternate;
+}
+
+.glitch-lines span:nth-child(1) {
+    top: 10%;
+    width: 50%;
+    height: 2px;
+}
+
+.glitch-lines span:nth-child(2) {
+    top: 25%;
+    left: 30%;
+    width: 20%;
+    height: 3px;
+}
+
+.glitch-lines span:nth-child(3) {
+    top: 40%;
+    left: 10%;
+    width: 60%;
+    height: 1px;
+}
+
+.glitch-lines span:nth-child(4) {
+    top: 60%;
+    width: 30%;
+    height: 2px;
+}
+
+.glitch-lines span:nth-child(5) {
+    top: 75%;
+    left: 40%;
+    width: 40%;
+    height: 1px;
+}
+
+.glitch-lines span:nth-child(5) {
+    top: 90%;
+    left: 20%;
+    width: 10%;
+    height: 3px;
+}
+
+@keyframes glitch-anim {
+    0% { transform: translateY(0); opacity: 0.1; }
+    50% { transform: translateY(calc(100vh * 0.5 * var(--random-factor))); opacity: 0.5; }
+    100% { transform: translateY(0); opacity: 0.1; }
+}

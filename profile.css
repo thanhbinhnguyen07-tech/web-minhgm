@@ -1,0 +1,388 @@
+﻿/*
+ * Profile.css - Phiên bản Tối Giản & Nổi Bật TRÊN NỀN ĐỘNG
+ * Tính năng: Nền động Gradient, Dark Mode, Avatar HOÀN HẢO, KHÔNG CÓ KHUNG CHÍNH,
+ * Nội dung nổi bật trực tiếp trên nền động.
+ * Phong cách: Hiện đại, Tối giản, Trực quan, Chuyên nghiệp.
+ */
+
+/* ====================================
+   0. KEYFRAMES CHO NỀN ĐỘNG
+   ==================================== */
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+/* ====================================
+   0. KEYFRAMES BỔ SUNG CHO HIỆU ỨNG AVATAR
+   ==================================== */
+
+@keyframes pulse-and-swing {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.05) rotate(-2deg);
+    }
+    /* Phóng to và xoay nhẹ sang trái */
+    50% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    75% {
+        transform: scale(1.05) rotate(2deg);
+    }
+    /* Phóng to và xoay nhẹ sang phải */
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* ====================================
+   1. THIẾT LẬP CHUNG & LIGHT MODE (Nền Động & Font chữ)
+   ==================================== */
+body {
+    font-family: -apple-system, BlinkMacMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.7;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(135deg, #84fab0, #c3b6f0, #ffd700, #ff9999, #64b5f6);
+    background-size: 400% 400%;
+    animation: gradient-animation 20s ease infinite;
+    color: #2c3e50; /* Màu chữ đậm hơn để nổi bật trên nền động */
+    min-height: 100vh;
+    transition: color 0.4s;
+    cursor: url('cursorarrow.png'), auto;
+}
+
+/* Bố cục chính (ĐÃ XÓA NỀN TRẮNG, CHỈ LÀ CÔNG CỤ ĐỊNH VỊ) */
+.profile-layout {
+    width: 95%;
+    max-width: 900px; /* Giữ max-width hợp lý để không quá dàn trải */
+    margin: 40px auto;
+    padding: 0; /* Xóa padding */
+    background-color: transparent; /* XÓA HOÀN TOÀN NỀN */
+    box-shadow: none; /* XÓA BÓNG ĐỔ */
+    border-radius: 0;
+    transition: background-color 0.4s, box-shadow 0.4s;
+    position: relative;
+}
+
+/* HEADER CHÍNH */
+.main-header {
+    text-align: center;
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+    border-bottom: 4px solid rgba(26, 77, 110, 0.5); /* Đường kẻ mờ hơn, hòa vào nền */
+    opacity: 1; /* Không làm mờ */
+    /* Nền nhẹ cho header để chữ dễ đọc hơn trên nền động */
+    background-color: rgba(255, 255, 255, 0.7);
+    padding-top: 30px;
+    border-radius: 12px; /* Bo góc cho header */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Giảm khoảng cách giữa header và các section info */
+}
+
+/* ĐỊNH KIỂU CHO AVATAR (HOÀN HẢO - KHÔNG CẮT, VỪA KHUNG) */
+.avatar {
+    width: 180px; /* Chiều rộng cố định */
+    height: 180px; /* Chiều cao cố định, tạo hình vuông */
+    border-radius: 50%; /* Hình tròn hoàn hảo */
+    /* THAY ĐỔI LỚN: Dùng background-image cho div, kiểm soát hoàn toàn ảnh */
+    background-image: url('a.jpg'); /* Đảm bảo đường dẫn đúng */
+    background-size: cover; /* Lấp đầy khung, không bị dư */
+    background-position: center; /* Luôn căn giữa ảnh */
+    background-repeat: no-repeat;
+    margin: 0 auto 20px auto; /* Căn giữa và khoảng cách dưới */
+    border: 6px solid #1a4d6e; /* Viền đậm hơn */
+    box-shadow: 0 0 0 10px rgba(26, 77, 110, 0.3), 0 8px 20px rgba(0, 0, 0, 0.4); /* Bóng đổ mạnh mẽ */
+    transition: all 0.3s ease;
+    cursor: url('cursorhand.png'), auto;
+}
+
+    .avatar:hover {
+        transform: scale(1.03) rotate(2deg); /* Hiệu ứng hover vui nhộn */
+        box-shadow: 0 0 0 10px rgba(26, 77, 110, 0.5), 0 12px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .avatar:hover {
+        /* Loại bỏ hiệu ứng cũ (transform: scale(1.03) rotate(2deg);) */
+        animation: pulse-and-swing 1s ease-in-out infinite; /* Kích hoạt hiệu ứng tim đập và xoay lắc */
+        box-shadow: 0 0 0 10px rgba(26, 77, 110, 0.5), 0 12px 25px rgba(0, 0, 0, 0.5); /* Tăng bóng đổ khi hover */
+    }
+
+h1 {
+    font-family: 'Orbitron', sans-serif; 
+    color: #f0f0f0; /* Giữ màu trắng/xám nhạt cho lõi chữ */
+    font-size: 4.2em; 
+    font-weight: 700; 
+    margin-bottom: 0; 
+    
+    /* CẬP NHẬT LỚN: TẠO HIỆU ỨNG VIỀN DÀY (STROKE) BẰNG MULTIPLE TEXT-SHADOW */
+    text-shadow: 
+        /* Viền/Độ dày 1px/2px màu xanh ngọc (tạo khung viền) */
+        1px 1px 0 #00b894, 
+        -1px -1px 0 #00b894, 
+        1px -1px 0 #00b894, 
+        -1px 1px 0 #00b894,
+        2px 2px 0 #00b894, /* Tăng độ dày */
+        
+        /* Hiệu ứng Neon (Quầng sáng) */
+        0 0 10px rgba(0, 184, 148, 0.9), /* Sát chữ */
+        0 0 20px rgba(0, 184, 148, 0.6), /* Lan tỏa */
+        0 0 30px rgba(0, 0, 0, 0.5); /* Bóng đổ mạnh mẽ */
+    
+    transition: all 0.3s; 
+}
+
+h1:hover {
+    color: #ffe66d; /* Màu lõi chữ (Vàng tươi) */
+    text-shadow: 
+        /* Viền/Độ dày 1px/2px màu vàng tươi (tạo khung viền) */
+        1px 1px 0 #f1c40f, 
+        -1px -1px 0 #f1c40f, 
+        1px -1px 0 #f1c40f, 
+        -1px 1px 0 #f1c40f,
+        2px 2px 0 #f1c40f, /* Tăng độ dày */
+        
+        /* Hiệu ứng Neon (Quầng sáng) */
+        0 0 10px rgba(255, 230, 109, 0.9), 
+        0 0 20px rgba(255, 230, 109, 0.6), 
+        0 0 30px rgba(0, 0, 0, 0.5);
+    letter-spacing: 5px;
+}
+
+/* Tagline giữ nguyên vì cô đã ưng ý với Space Mono */
+.tagline {
+    font-family: 'Space Mono', monospace;
+    font-style: normal;
+    color: #1a4d6e; 
+    font-size: 1.25em; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    margin-top: 5px;
+    margin-bottom: 0;
+    text-shadow: 1px 1px 0 #ffffff, -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff; 
+}
+
+.content-sections {
+    display: block;
+}
+
+/* KHUNG TỔNG QUAN CHO MỖI MỤC INFO (Nổi bật trên nền động) */
+.info {
+    margin-bottom: 25px;
+    padding: 25px; /* Tăng padding */
+    background-color: rgba(255, 255, 255, 0.85); /* Nền trắng đục, hơi trong suốt */
+    border-radius: 12px; /* Bo góc nhiều hơn */
+    border-left: 6px solid #2ecc71; /* Viền đậm hơn */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Bóng đổ rõ ràng hơn */
+    transition: all 0.3s ease;
+}
+
+    .info:hover {
+        transform: translateY(-5px); /* Hiệu ứng nổi lên khi hover */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+/* Tiêu đề mục H2 */
+h2 {
+    color: #2c5f2d;
+    font-size: 1.8em; /* Tăng cỡ chữ H2 */
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-left: none;
+    padding-left: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Bóng đổ rõ ràng hơn */
+}
+
+/* ====================================
+   2. DANH SÁCH & HIỆU ỨNG HOVER (Khung Riêng Nổi bật)
+   ==================================== */
+ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: left;
+}
+
+    ul li {
+        margin-bottom: 12px; /* Tăng khoảng cách */
+        padding: 15px 20px; /* Tăng padding */
+        position: relative;
+        cursor: url('cursorhand.png'), auto;
+        border-radius: 10px; /* Bo góc nhiều hơn */
+        font-weight: 500;
+        /* KHUNG NỀN MẶC ĐỊNH CHO MỖI MỤC LIỆT KÊ (Nổi bật rõ ràng hơn) */
+        background-color: rgba(255, 255, 255, 0.9); /* Nền trắng đục hơn */
+        border: 1px solid #d0d0d0;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Bóng đổ rõ ràng hơn */
+
+        transition: all 0.3s;
+    }
+
+        ul li:hover {
+            background-color: rgba(44, 95, 45, 0.15); /* Nền hover nổi bật hơn */
+            transform: translateX(8px);
+            border-color: #2ecc71;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Bóng đổ tăng khi hover */
+        }
+
+            ul li:hover::before {
+                content: '🚀 ';
+                color: #e67e22;
+                font-weight: bold;
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+/* Nút chuyển đổi */
+#mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1a4d6e;
+    color: white;
+    cursor: url('cursorhand.png'), auto;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    #mode-toggle:hover {
+        background-color: #2c5f2d;
+    }
+
+
+/* ====================================
+   3. DARK MODE (Điều chỉnh Tối giản & Nổi bật)
+   ==================================== */
+
+body.dark-mode {
+    background-image: linear-gradient(135deg, #000000, #1c2833, #4a235a, #121212);
+    background-size: 400% 400%;
+    animation: gradient-animation 25s ease infinite;
+    color: #f0f0f0;
+}
+
+    body.dark-mode .profile-layout {
+        background-color: transparent; /* KHÔNG NỀN */
+        box-shadow: none; /* KHÔNG BÓNG ĐỔ */
+    }
+
+    body.dark-mode .main-header {
+        border-bottom: 4px solid rgba(243, 156, 18, 0.5); /* Đường kẻ mờ hơn */
+        background-color: rgba(30, 30, 30, 0.7); /* Nền tối đục hơn */
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    }
+
+    /* DARK MODE - AVATAR */
+    body.dark-mode .avatar {
+        border: 6px solid #2ecc71;
+        cursor: url('cursorhand.png'), auto;
+        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0.3), 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+        body.dark-mode .avatar:hover {
+            box-shadow: 0 0 0 10px rgba(46, 204, 113, 0.5), 0 12px 25px rgba(0, 0, 0, 0.7);
+        }
+
+    body.dark-mode h1 {
+    font-family: 'Orbitron', sans-serif; 
+    color: #f0f0f0; 
+    font-weight: 700;
+    
+    /* TẠO HIỆU ỨNG VIỀN DÀY CHO DARK MODE (Màu Xanh Dương) */
+    text-shadow: 
+        /* Viền/Độ dày 1px/2px màu xanh dương */
+        1px 1px 0 #3498db, 
+        -1px -1px 0 #3498db, 
+        1px -1px 0 #3498db, 
+        -1px 1px 0 #3498db,
+        2px 2px 0 #3498db, /* Tăng độ dày */
+        
+        /* Hiệu ứng Neon (Quầng sáng) */
+        0 0 10px rgba(52, 152, 219, 0.8), 
+        0 0 20px rgba(52, 152, 219, 0.5), 
+        0 0 30px rgba(0, 0, 0, 0.5); 
+}
+
+body.dark-mode h1:hover {
+    color: #ff6b6b; /* Màu lõi chữ (Đỏ tươi) */
+    
+    /* HIỆU ỨNG VIỀN DÀY KHI HOVER (Màu Đỏ) */
+    text-shadow: 
+        1px 1px 0 #e74c3c, 
+        -1px -1px 0 #e74c3c, 
+        1px -1px 0 #e74c3c, 
+        -1px 1px 0 #e74c3c,
+        2px 2px 0 #e74c3c, /* Tăng độ dày */
+        
+        /* Hiệu ứng Neon (Quầng sáng) */
+        0 0 10px rgba(255, 107, 107, 0.8), 
+        0 0 20px rgba(255, 107, 107, 0.5), 
+        0 0 30px rgba(0, 0, 0, 0.5); 
+    letter-spacing: 5px;
+}
+
+/* Tagline trong Dark Mode giữ nguyên */
+body.dark-mode .tagline { 
+    font-family: 'Space Mono', monospace;
+    font-style: normal;
+    color: #bdc3c7; 
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 #1e1e1e, -1px -1px 0 #1e1e1e, 1px -1px 0 #1e1e1e, -1px 1px 0 #1e1e1e;
+}
+
+    /* DARK MODE - KHUNG INFO */
+    body.dark-mode .info {
+        background-color: rgba(36, 36, 36, 0.85); /* Nền tối đục hơn */
+        border-left: 6px solid #2ecc71;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+        body.dark-mode .info:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+        }
+
+    body.dark-mode h2 {
+        color: #2ecc71;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* DARK MODE - KHUNG LIỆT KÊ */
+    body.dark-mode ul li {
+        background-color: rgba(30, 30, 30, 0.9); /* Nền tối đục hơn */
+        border: 1px solid #444;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+        body.dark-mode ul li:hover {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-color: #2ecc71;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+            body.dark-mode ul li:hover::before {
+                color: #f1c40f;
+            }
+
+    body.dark-mode .avatar:hover {
+        /* Hiệu ứng tim đập và xoay lắc cũng áp dụng trong Dark Mode */
+        animation: pulse-and-swing 1s ease-in-out infinite;
+        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0.5), 0 12px 25px rgba(0, 0, 0, 0.7);
+    }

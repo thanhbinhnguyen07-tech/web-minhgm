@@ -1,0 +1,135 @@
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes scan-line {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+@keyframes incorrect-glitch {
+    0% { transform: translate(0, 0); }
+    15% { transform: translate(-2px, 2px); }
+    30% { transform: translate(2px, -2px); }
+    45% { transform: translate(-2px, 2px); }
+    60% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, 2px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* Sử dụng ảnh cursorarrow.png làm con trỏ mặc định cho toàn bộ trang */
+body {
+    background-color: #0d1117;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    font-size: 1.2em;
+    cursor: url('cursorarrow.png'), auto;
+}
+
+/* Sử dụng ảnh cursorhand.png khi di chuột qua các thành phần có thể click */
+#answer-input {
+    cursor: url('cursorhand.png'), pointer;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 255, 0, 0.5);
+    animation: scan-line 5s linear infinite;
+    z-index: 1;
+}
+
+.game-container {
+    position: relative;
+    border: 1px solid #00ff00;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px #00ff00, inset 0 0 10px #00ff00;
+    max-width: 600px;
+    width: 90%;
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-shadow: 0 0 8px #00ff00;
+    margin-bottom: 20px;
+}
+
+.info-panel {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.binary-display-area {
+    font-size: 3em;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff00;
+    min-height: 50px;
+}
+
+.input-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#answer-input {
+    background-color: transparent;
+    color: #00ff00;
+    border: none;
+    border-bottom: 2px solid #00ff00;
+    padding: 5px;
+    font-size: 1.5em;
+    outline: none;
+    text-align: center;
+    width: 200px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.5em;
+    background-color: #00ff00;
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+#message {
+    font-size: 1.2em;
+    height: 20px;
+    margin-top: 15px;
+}
+
+.correct {
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.incorrect {
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+    animation: incorrect-glitch 0.5s ease-out;
+}

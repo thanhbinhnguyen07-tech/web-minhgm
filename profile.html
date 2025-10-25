@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFILE CỦA TÔI - Minh GM</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+    <button id="mode-toggle">Chuyển sang Dark Mode 🌙</button>
+
+    <div class="profile-layout">
+
+        <header class="main-header">
+            <img src="avatar.jpg" alt="Avatar" class="avatar">
+            <h1>Minh GM</h1>
+            <p class="tagline">"Thánh Diệt BUG · Kẻ Phá Giới Hạn · Trùm Giải Thuật Toán"</p>
+        </header>
+
+        <div class="content-sections">
+            <section class="info">
+                <h2>Ngôn ngữ đã học</h2>
+                <ul class="languages">
+                    <li>Scratch</li>
+                    <li>Python</li>
+                    <li>C++</li>
+                    <li>JavaScript</li>
+                </ul>
+            </section>
+
+            <section class="info">
+                <h2>Dự án</h2>
+                <ul>
+                    <li>Web Profile</li>
+                    <li>Game Clicker</li>
+                    <li>Web TR</li>
+                </ul>
+            </section>
+
+            <section class="info contact-section">
+                <h2>Liên hệ</h2>
+                <ul>
+                    <li>Email: <strong>minhgm123@gmmail.com</strong></li>
+                    <li>Hotline: <strong>0987.654.321</strong></li>
+                </ul>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById('mode-toggle');
+        const body = document.body;
+
+        const savedMode = localStorage.getItem('darkMode');
+        if (savedMode === 'enabled') {
+            body.classList.add('dark-mode');
+            toggleButton.innerText = 'Chuyển sang Light Mode ☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                toggleButton.innerText = 'Chuyển sang Light Mode ☀️';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                toggleButton.innerText = 'Chuyển sang Dark Mode 🌙';
+            }
+        });
+    </script>
+
+</body>
+</html>

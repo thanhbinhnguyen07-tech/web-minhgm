@@ -1,0 +1,92 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+    --neon-green: #39FF14;
+    --bg-color: #000000;
+    --neon-blue: #00FFFF;
+    --neon-red: #FF073A;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    font-family: 'VT323', monospace;
+    color: var(--neon-green);
+    cursor: url('cursorarrow.png'), auto;
+}
+
+#matrix-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-red), 0 0 20px var(--neon-red);
+}
+
+.glitch {
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-5px, 5px);
+    }
+
+    40% {
+        transform: translate(-5px, -5px);
+    }
+
+    60% {
+        transform: translate(5px, 5px);
+    }
+
+    80% {
+        transform: translate(5px, -5px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+#loading-text {
+    font-size: 1.5em;
+    min-height: 1.5em;
+    text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-red);
+}
+
+.loading-bar-container {
+    width: 300px;
+    height: 15px;
+    border: 1px solid var(--neon-green);
+    margin-top: 20px;
+}
+
+#loading-bar {
+    height: 100%;
+    width: 0; /* Bắt đầu với chiều rộng 0 */
+    background-color: var(--neon-blue);
+    transition: width 1s ease-in-out; /* Tạo hiệu ứng chuyển động mượt */
+}
