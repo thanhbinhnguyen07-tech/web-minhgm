@@ -78,10 +78,6 @@ function startNewLevel() {
     passwordInput.disabled = false;
     enterButton.disabled = false;
     errorMessage.textContent = "";
-
-    // Gợi ý cho người chơi biết cách nhập mật khẩu
-    // Cô có thể xóa dòng này nếu muốn người chơi tự tìm ra
-    console.log("Mật khẩu đúng là: " + currentPassword);
 }
 
 // Lắng nghe sự kiện click và Enter

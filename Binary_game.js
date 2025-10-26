@@ -50,7 +50,6 @@ function generateNewChallenge() {
     messageElement.textContent = '';
     answerInput.focus();
     gameContainer.classList.remove('incorrect');
-    console.log('New word:', currentWord);
 }
 
 // Hàm xử lý khi người chơi trả lời
