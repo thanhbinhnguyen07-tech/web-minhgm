@@ -40,7 +40,7 @@
         clearInterval(timerInterval);
         gameContainer.style.pointerEvents = 'none'; // Vô hiệu hóa click
 
-        if (score <= -500 || score >= 100) {
+        if (score <= -500 || score >= 75) {
             overlayText.innerText = "Chúc mừng bạn đã vượt qua thử thách!";
             overlayText.style.color = '#34d399'; // Màu xanh lá
             overlay.classList.remove('hidden');
