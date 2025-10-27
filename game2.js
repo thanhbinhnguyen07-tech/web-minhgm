@@ -40,13 +40,13 @@
         clearInterval(timerInterval);
         gameContainer.style.pointerEvents = 'none'; // Vô hiệu hóa click
 
-        if (score <= -300 || score >= 60) {
+        if (score <= -500 || score >= 100) {
             overlayText.innerText = "Chúc mừng bạn đã vượt qua thử thách!";
             overlayText.style.color = '#34d399'; // Màu xanh lá
             overlay.classList.remove('hidden');
             // Chuyển hướng đến màn hình mật khẩu sau 3s
             setTimeout(() => {
-                window.location.href = 'game2.html'; // Sếp thay tên file cho đúng nhé
+                window.location.href = 'password.html'; // Sếp thay tên file cho đúng nhé
             }, 3000);
         } else {
             overlayText.innerText = "Bạn chưa đủ trình! Chơi lại đi!";
