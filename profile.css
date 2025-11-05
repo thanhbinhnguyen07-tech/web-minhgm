@@ -63,6 +63,28 @@ body {
     transition: color 0.4s;
     cursor: url('cursorarrow.png'), auto;
 }
+/* --- PHẦN MỚI: HIỆU ỨNG LƯỚI CÔNG NGHỆ (GRID OVERLAY) --- */
+.grid-overlay {
+    position: absolute; /* Đặt lớp phủ tuyệt đối */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Rất quan trọng: Cho phép click xuyên qua lớp phủ */
+    z-index: 1; /* Đảm bảo nằm trên nền nhưng dưới các nội dung chính */
+    /* Tạo background dạng lưới */
+    background-image: linear-gradient(0deg, rgba(0,0,0,0.05) 1px, transparent 1px), /* Đường kẻ ngang */
+    linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px); /* Đường kẻ dọc */
+    background-size: 20px 20px; /* Kích thước ô lưới */
+    opacity: 0.3; /* Độ mờ của lưới (rất nhẹ) */
+    transition: opacity 0.5s ease;
+}
+
+/* Điều chỉnh màu sắc cho Dark Mode */
+body.dark-mode .grid-overlay {
+    background-image: linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    opacity: 0.2; /* Mờ hơn trong Dark Mode để không bị chói */
+}
 
 /* Bố cục chính (ĐÃ XÓA NỀN TRẮNG, CHỈ LÀ CÔNG CỤ ĐỊNH VỊ) */
 .profile-layout {
@@ -76,7 +98,247 @@ body {
     transition: background-color 0.4s, box-shadow 0.4s;
     position: relative;
 }
+/* --- PHẦN MỚI: NHẬT KÝ DỰ ÁN DẠNG TERMINAL --- */
 
+.project-log-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 20px; /* Thêm padding xung quanh khối log */
+    background-color: #f7f7f7; /* Nền nhẹ hơn để làm nổi bật khối */
+    border-radius: 8px; /* Bo góc nhẹ */
+    border: 2px solid #3498db; /* Khung viền màu xanh nổi bật */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ */
+    transition: all 0.4s ease;
+    position: relative;
+    cursor: url('cursorhand.png'), auto;
+}
+
+.project-log-section {
+    margin-bottom: 25px;
+    padding: 25px; /* Tăng padding */
+    background-color: rgba(255, 255, 255, 0.85); /* Nền trắng đục, hơi trong suốt */
+    border-radius: 12px; /* Bo góc nhiều hơn */
+    border-left: 6px solid #2ecc71; /* Viền đậm hơn */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Bóng đổ rõ ràng hơn */
+    transition: all 0.3s ease;
+    cursor: url('cursorhand.png'), auto;
+}
+
+.project-log-section:hover {
+    transform: translateY(-5px); /* Hiệu ứng nổi lên khi hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+/* Áp dụng trong Dark Mode */
+body.dark-mode .project-log-section::before {
+    background-color: #1abc9c; /* Màu xanh ngọc (Cyan) trong Dark Mode */
+    box-shadow: 0 0 8px #1abc9c;
+}
+.project-log {
+    background-color: #2c3e50; /* Nền xanh đậm/Đen nhạt */
+    color: #2ecc71; /* Chữ xanh lá neon */
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9em;
+    padding: 15px;
+    border-radius: 5px;
+    white-space: pre-wrap; /* Quan trọng để giữ định dạng xuống dòng của PRE */
+    /* Ẩn nội dung bị tràn */
+    border: 1px solid #3498db; /* Viền Terminal */
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.5); /* Phát sáng nhẹ */
+    /* Hiệu ứng con trỏ (cursor) */
+    border-right: .15em solid #2ecc71;
+    animation: terminal-blink-caret .75s step-end infinite;
+    cursor: url('cursorhand.png'), auto;
+}
+
+body.dark-mode .project-log-section {
+    background-color: #1a1a1a; /* Nền tối đậm hơn */
+    border-color: #4dc4d4; /* Viền màu xanh cyan neon */
+    box-shadow: 0 0 15px rgba(77, 196, 212, 0.3);
+    cursor: url('cursorhand.png'), auto;
+}
+
+/* Tắt con trỏ khi Dark Mode đang áp dụng */
+body.dark-mode .project-log {
+    background-color: #1c2533;
+    color: #4dc4d4; /* Xanh Cyan */
+    border-right: .15em solid #4dc4d4;
+    border-color: #4dc4d4;
+    box-shadow: 0 0 10px rgba(77, 196, 212, 0.6);
+}
+
+.project-log-section h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #95a5a6; /* Đường gạch chân mờ */
+}
+
+/* Định nghĩa hoạt ảnh con trỏ Terminal */
+@keyframes terminal-blink-caret {
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: inherit;
+    }
+}
+/* CSS Code Snippet */
+
+/* Đảm bảo các khối Tilt có ranh giới rõ ràng và nội dung không tràn */
+.project-log-section,
+.skill-section-container,
+.contact-section-container {
+    /* Quan trọng: Thiết lập không gian 3D và giới hạn tràn */
+    transform-style: preserve-3d;
+    overflow: hidden; /* Giới hạn nội dung con, đặc biệt quan trọng khi có transform */
+    /* Có thể cần padding để tạo khoảng cách an toàn cho nội dung */
+    padding: 15px;
+}
+
+/* 1. HIỆU ỨNG NHIỄU TĨNH (STATIC NOISE) */
+/* Sử dụng gradient để mô phỏng nhiễu hạt (grain) */
+.static-noise-overlay {
+    background-image: repeating-linear-gradient( 0deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 1px, transparent 1px, transparent 2px );
+    background-size: 100% 100%;
+    animation: noise-move 1s infinite alternate; /* Tạo sự chuyển động nhẹ nhàng */
+}
+
+@keyframes noise-move {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 100px 100px;
+    }
+}
+
+/* 2. HIỆU ỨNG VỆT QUÉT (SCANLINES) */
+/* Sử dụng gradient để tạo các đường kẻ ngang */
+.scanline-overlay {
+    /* Đổi màu tùy theo Dark Mode */
+    background-color: transparent;
+    background-image: linear-gradient( rgba(10, 255, 10, 0.05) 1px, transparent 1px );
+    background-size: 100% 2px; /* Tần suất đường quét */
+}
+
+/* Nâng cấp: Chỉnh màu cho Scanline khi ở Dark Mode */
+.dark-mode .scanline-overlay {
+    background-image: linear-gradient( rgba(10, 255, 10, 0.05) 1px, /* Màu xanh neon nhạt */
+    transparent 1px );
+}
+
+/* Nâng cấp: Chỉnh màu cho Scanline khi ở Light Mode (nếu cần) */
+
+.scanline-overlay {
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.05) 1px, 
+        transparent 1px
+    );
+}
+
+/* --- PHẦN MỚI: HIỆU ỨNG LỌC MÀU/RUNG MÀN HÌNH (HUD FILTER) --- */
+
+/* Đặt vị trí tương đối và overflow:hidden cho profile-layout để dễ áp dụng filter */
+.profile-layout {
+    position: relative;
+    /* Cần thiết để kiểm soát hiệu ứng rung */
+    transition: filter 0.3s ease;
+}
+
+    /* 1. HIỆU ỨNG RUNG VÀ LỌC MÀU KHI HOVER (Áp dụng cho khối chính) */
+    .profile-layout:hover {
+        /* Lọc màu: Làm màu sắc lệch nhẹ (Chromatic Aberration) */
+        filter: hue-rotate(5deg) brightness(1.05);
+        /* Hoạt ảnh rung nhẹ */
+        animation: screen-jitter 0.1s infinite alternate;
+    }
+
+/* Định nghĩa hoạt ảnh rung (Jitter) */
+@keyframes screen-jitter {
+    0% {
+        transform: translate(1px, 1px);
+    }
+
+    100% {
+        transform: translate(-1px, -1px);
+    }
+}
+
+/* 2. LỚP PHỦ LỌC MÀU (Tạo hiệu ứng CRT/Scanline) */
+.profile-layout::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999; /* Nằm trên tất cả nội dung */
+    /* Hiệu ứng hạt nhiễu mờ/Scanline */
+    background: repeating-linear-gradient( 0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px );
+    opacity: 0; /* Mặc định ẩn */
+    transition: opacity 0.3s ease;
+}
+
+/* 3. KÍCH HOẠT LỚP PHỦ KHI HOVER */
+.profile-layout:hover::after {
+    opacity: 1; /* Hiện lớp phủ lọc màu */
+}
+
+/* Điều chỉnh cho Dark Mode */
+body.dark-mode .profile-layout:hover {
+    filter: hue-rotate(-5deg) brightness(1.1); /* Thay đổi hướng lọc màu */
+    animation: screen-jitter-dark 0.1s infinite alternate;
+}
+
+@keyframes screen-jitter-dark {
+    0% {
+        transform: translate(-1px, 0);
+    }
+
+    100% {
+        transform: translate(1px, 0);
+    }
+}
+
+body.dark-mode .profile-layout::after {
+    background: repeating-linear-gradient( 0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 2px );
+}
+
+/* --- PHẦN ĐIỀU CHỈNH & MỚI: HIỆU ỨNG TẢI DỮ LIỆU CHO SKILL BAR --- */
+
+/* Thêm hoạt ảnh chạy cho sọc */
+@keyframes data-load-animation {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 40px 0;
+    }
+    /* Chạy 40px */
+}
+
+.skill-bar {
+    position: relative;
+    overflow: hidden; /* Quan trọng để sọc gradient không tràn ra ngoài */
+    /* Thiết lập sọc (Stripe Gradient) */
+    background-image: linear-gradient( -45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent );
+    background-size: 20px 20px; /* Kích thước sọc */
+    /* Áp dụng hoạt ảnh chạy chậm (dữ liệu đang load) */
+    animation: data-load-animation 2s linear infinite;
+    /* GIỮ NGUYÊN các style khác (như box-shadow neon) */
+    transition: width 1.5s ease-out, box-shadow 0.5s;
+}
+
+/* HIỆU ỨNG KHI HOVER: Chạy nhanh hơn và Phát sáng mạnh hơn */
+.skill-item:hover .skill-bar {
+    animation: data-load-animation 0.5s linear infinite; /* Chạy nhanh gấp 4 lần */
+    box-shadow: 0 0 10px rgba(52, 152, 219, 1), 0 0 20px rgba(52, 152, 219, 0.8);
+    cursor: url('cursorhand.png'), auto;
+}
 /* HEADER CHÍNH */
 .main-header {
     text-align: center;
@@ -265,7 +527,84 @@ ul {
     #mode-toggle:hover {
         background-color: #2c5f2d;
     }
+/* --- PHẦN MỚI: HIỆU ỨNG SKILL DATA BAR (LIGHT MODE) --- */
+.skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Khoảng cách giữa các skill */
+    margin-top: 20px;
+}
 
+.skill-item {
+    display: grid;
+    grid-template-columns: 120px 1fr 50px; /* Cột 1: Tên, Cột 2: Thanh Bar, Cột 3: % */
+    align-items: center;
+    gap: 10px;
+}
+
+.skill-name {
+    position: relative; /* Đặt vị trí tương đối để chèn pseudo-element */
+    padding-left: 0; /* Đảm bảo không có padding thừa */
+    transition: padding-left 0.3s ease;
+    font-weight: 700;
+    color: #2c3e50; /* Màu chữ đậm */
+}
+    .skill-name::before {
+        content: "👉"; /* Biểu tượng con trỏ */
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0; /* Mặc định ẩn */
+        transition: opacity 0.3s ease, left 0.3s ease;
+        font-size: 0.8em; /* Kích thước nhỏ hơn */
+        color: #2c3e50; /* Màu chữ đậm */
+    }
+.skill-item:hover .skill-name {
+    padding-left: 20px; /* Dịch tên skill sang phải để nhường chỗ cho con trỏ */
+}
+
+    .skill-item:hover .skill-name::before {
+        opacity: 1; /* Hiện con trỏ */
+        left: -5px; /* Điều chỉnh vị trí để nằm sát bên trái */
+    }
+/* --- PHẦN CSS TRONG LIGHT MODE --- */
+
+.skill-bar-container {
+    height: 12px; /* TĂNG CHIỀU CAO thanh bar */
+    background-color: #ecf0f1;
+    border-radius: 6px; /* Bo tròn hơn */
+    overflow: hidden;
+    /* THÊM BÓNG ĐỔ SÂU (Inner Shadow) để trông như bị ấn xuống */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: none; /* Bỏ viền cũ */
+}
+
+.skill-bar {
+    height: 100%;
+    background-color: #2ecc71; /* Đổi sang màu Xanh Lá Terminal (Tương phản mạnh) */
+    /* THÊM BÓNG ĐỔ NEON cho thanh Bar */
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.7);
+    transition: width 1s ease-in-out;
+    width: 0%;
+}
+
+.skill-percentage {
+    font-weight: 700;
+    color: #2ecc71; /* Đồng bộ màu % với thanh bar */
+}
+
+/* --- PHẦN MỚI: HIỆU ỨNG PROJECT LOG (LIGHT MODE) --- */
+.project-log {
+    font-family: 'Space Mono', monospace; /* Font Sci-Fi cho dữ liệu Terminal */
+    font-size: 0.9em;
+    background-color: #f7f9fb; /* Nền trắng/xám nhẹ */
+    border: 1px solid #bdc3c7;
+    padding: 15px;
+    border-radius: 4px;
+    color: #2c3e50;
+    white-space: pre-wrap; /* Đảm bảo xuống dòng nếu nội dung quá dài */
+}
 
 /* ====================================
    3. DARK MODE (Điều chỉnh Tối giản & Nổi bật)
@@ -338,6 +677,19 @@ body.dark-mode h1:hover {
     letter-spacing: 5px;
 }
 
+    /* --- HIỆU ỨNG TẢI DỮ LIỆU CHO SKILL BAR (DARK MODE) --- */
+    body.dark-mode .skill-bar {
+        /* Đổi màu sọc để nhìn rõ hơn trên nền tối */
+        background-image: linear-gradient( -45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2) 75%, transparent 75%, transparent );
+        /* Giữ nguyên hoạt ảnh chạy chậm */
+    }
+
+    /* HIỆU ỨNG KHI HOVER (DARK MODE) */
+    body.dark-mode .skill-item:hover .skill-bar {
+        animation: data-load-animation 0.5s linear infinite; /* Chạy nhanh */
+        /* Giữ nguyên box-shadow mạnh hơn của Dark Mode */
+    }
+
 /* Tagline trong Dark Mode giữ nguyên */
 body.dark-mode .tagline { 
     font-family: 'Space Mono', monospace;
@@ -363,7 +715,34 @@ body.dark-mode .tagline {
         color: #2ecc71;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     }
+    /* --- PHẦN MỚI: HIỆU ỨNG SKILL DATA BAR (DARK MODE) --- */
+    body.dark-mode .skill-name {
+        color: #ecf0f1; /* Chữ trắng nhạt */
+    }
+        body.dark-mode .skill-name::before {
+            color: #ecf0f1; /* Đổi màu con trỏ cho phù hợp với nền tối */
+        }
+    /* --- PHẦN CSS TRONG DARK MODE --- */
 
+    body.dark-mode .skill-bar-container {
+        background-color: #34495e;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4); /* Tăng bóng đổ sâu */
+        border: none;
+    }
+
+    body.dark-mode .skill-bar {
+        background-color: #3498db; /* Giữ màu Xanh Dương Công Nghệ */
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.7); /* Thêm bóng Neon */
+    }
+    body.dark-mode .skill-percentage {
+        color: #3498db;
+    }
+    /* --- PHẦN MỚI: HIỆU ỨNG PROJECT LOG (DARK MODE) --- */
+    body.dark-mode .project-log {
+        background-color: #1e2a38; /* Nền tối đậm */
+        border: 1px solid #34495e;
+        color: #2ecc71; /* Chữ màu Xanh lá Terminal */
+    }
     /* DARK MODE - KHUNG LIỆT KÊ */
     body.dark-mode ul li {
         background-color: rgba(30, 30, 30, 0.9); /* Nền tối đục hơn */
@@ -386,3 +765,419 @@ body.dark-mode .tagline {
         animation: pulse-and-swing 1s ease-in-out infinite;
         box-shadow: 0 0 0 10px rgba(46, 204, 113, 0.5), 0 12px 25px rgba(0, 0, 0, 0.7);
     }
+/* --- PHẦN MỚI: HIỆU ỨNG CHUYỂN ĐỔI DARK MODE SÁNG TẠO --- */
+
+/* CSS cho nút Dark Mode (tùy chỉnh thêm) */
+.mode-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1a4d6e;
+    color: white;
+    cursor: url('cursorhand.png'), auto;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .mode-toggle-btn:hover {
+        background-color: #34495e;
+        transform: scale(1.05);
+    }
+
+body.dark-mode .mode-toggle-btn {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+    body.dark-mode .mode-toggle-btn:hover {
+        background-color: #bdc3c7;
+    }
+
+
+/* Lớp phủ màn hình "Glitch" */
+.glitch-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black; /* Màu đen để che phủ */
+    opacity: 0; /* Mặc định ẩn */
+    z-index: 9999; /* Đảm bảo nằm trên mọi thứ */
+    pointer-events: none; /* Không cản trở click */
+    transition: opacity 0.3s ease-out; /* Chuyển đổi nhanh */
+}
+
+    /* Hiệu ứng "glitch" khi lớp phủ hiện ra */
+    .glitch-overlay.active {
+        opacity: 1;
+        animation: screen-glitch 0.5s forwards; /* Hoạt ảnh glitch */
+    }
+
+@keyframes screen-glitch {
+    0% {
+        transform: translate(0, 0);
+        filter: hue-rotate(0deg);
+    }
+
+    25% {
+        transform: translate(5px, 0);
+        filter: hue-rotate(90deg);
+    }
+
+    50% {
+        transform: translate(-5px, 0);
+        filter: hue-rotate(180deg);
+    }
+
+    75% {
+        transform: translate(5px, 0);
+        filter: hue-rotate(270deg);
+    }
+
+    100% {
+        transform: translate(0, 0);
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* CSS cho hiệu ứng "nạp lại dữ liệu" (có thể thêm sau nếu muốn) */
+.loading-screen {
+    /* Tương tự glitch-overlay nhưng có thể thêm text loading */
+}
+/* --- PHẦN MỚI: HIỆU ỨNG ĐÁNH MÁY TERMINAL --- */
+#typewriter-tagline {
+    /* Đảm bảo nội dung ban đầu không hiển thị hoặc chỉ hiển thị con trỏ */
+    /* Hiệu ứng con trỏ nhấp nháy */
+    border-right: .15em solid #2ecc71; /* Màu con trỏ Terminal */
+    white-space: pre-wrap; /* Ngăn không cho chữ bị wrap */
+}
+
+/* Hoạt ảnh nhấp nháy cho con trỏ */
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #2ecc71;
+    }
+    /* Màu sáng hơn khi nhấp nháy */
+}
+
+/* Áp dụng cho Dark Mode */
+body.dark-mode #typewriter-tagline {
+    border-right: .15em solid #3498db;
+}
+
+body.dark-mode @keyframes blink-caret {
+    from, to
+
+{
+    border-color: transparent
+}
+
+50% {
+    border-color: #3498db;
+}
+}
+/* CSS Code Snippet */
+@keyframes jiggle {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-2px, -2px);
+    }
+
+    50% {
+        transform: translate(2px, 2px);
+    }
+
+    75% {
+        transform: translate(-2px, 2px);
+    }
+}
+
+.jiggle-active {
+    animation: jiggle 0.15s ease-out; /* Thời gian ngắn để tạo cảm giác chớp nhoáng */
+}
+
+/* ====================================
+   5. MODAL C++ CHALLENGE (NEON TECH STYLE)
+   ==================================== */
+
+/* Modal Backdrop (Phần nền tối mờ) */
+.modal-challenge {
+    display: none; /* Mặc định ẩn, JS sẽ hiện khi cần */
+    position: fixed;
+    z-index: 1000; /* Đảm bảo nằm trên mọi thứ */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9); /* Nền đen mờ 90% */
+    backdrop-filter: blur(5px); /* Làm mờ nhẹ nền phía sau */
+    padding-top: 50px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Nội dung Modal (Khung chính) */
+.modal-content {
+    position: relative;
+    background-color: #1c2533; /* Nền xanh đậm */
+    margin: 5% auto; /* Đặt ở giữa */
+    padding: 30px;
+    border: 3px solid #3498db; /* Viền Xanh Dương Neon */
+    width: 90%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.7), /* Bóng Neon mờ */
+    0 0 25px rgba(0, 0, 0, 0.8); /* Bóng đổ sâu */
+    animation: scaleIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Hiệu ứng bật ra */
+    cursor: url('cursorarrow.png'), auto; /* Con trỏ mặc định */
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Header và Tiêu đề */
+.challenge-header {
+    text-align: center;
+    border-bottom: 1px dashed rgba(52, 152, 219, 0.5);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+    .challenge-header h2 {
+        font-family: 'Orbitron', sans-serif;
+        color: #4dc4d4; /* Xanh Cyan */
+        font-size: 2em;
+        text-shadow: 0 0 5px #4dc4d4;
+    }
+
+    .challenge-header p {
+        color: #bdc3c7;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.9em;
+    }
+
+.trophy-icon {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 10px;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    to {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* Nút Đóng */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #e74c3c; /* Màu Đỏ Cảnh báo */
+    font-size: 28px;
+    font-weight: bold;
+    cursor: url('cursorhand.png'), auto;
+    transition: color 0.2s, transform 0.2s;
+}
+
+    .close-btn:hover {
+        color: #ff6b6b;
+        transform: rotate(90deg);
+        text-shadow: 0 0 10px #ff6b6b;
+    }
+
+/* Vùng Hiển Thị Code */
+.code-area-container {
+    background-color: #0d1620; /* Nền Terminal đậm hơn */
+    border: 1px solid #3498db;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+}
+
+.code-header {
+    background-color: #2c3e50;
+    color: #f1c40f; /* Vàng Cảnh báo */
+    font-family: 'Space Mono', monospace;
+    padding: 5px 15px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 0.8em;
+}
+
+#challenge-code {
+    color: #2ecc71; /* Xanh Lá Terminal */
+    font-family: 'Space Mono', monospace;
+    font-size: 1em;
+    padding: 15px;
+    margin: 0; /* Xóa margin mặc định của <pre> */
+    white-space: pre-wrap;
+    /* Hiệu ứng gõ và nhấp nháy code */
+    border-right: .15em solid #2ecc71;
+    animation: terminal-blink-caret .75s step-end infinite;
+    min-height: 100px;
+}
+
+/* Khu vực Tương tác */
+.interaction-area {
+    padding: 10px;
+}
+
+.question-text {
+    font-size: 1.1em;
+    color: #f0f0f0;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#challenge-answer-input {
+    flex-grow: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: 2px solid #34495e;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    font-family: 'Space Mono', monospace;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+    #challenge-answer-input:focus {
+        outline: none;
+        border-color: #f1c40f; /* Vàng focus */
+        box-shadow: 0 0 5px rgba(241, 196, 15, 0.8);
+    }
+
+/* Nút Hành động Chung */
+.action-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: url('cursorhand.png'), auto;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Nút Chạy Code */
+.run-btn {
+    background-color: #2ecc71; /* Xanh Lá */
+    color: #1c2533;
+}
+
+    .run-btn:hover {
+        background-color: #27ae60;
+        box-shadow: 0 0 15px rgba(46, 204, 113, 0.9);
+        transform: translateY(-2px);
+    }
+
+/* Nút Thử Thách Khác */
+.next-btn {
+    background-color: #f39c12; /* Màu Cam/Vàng */
+    color: #1c2533;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+    .next-btn:hover {
+        background-color: #e67e22;
+        box-shadow: 0 0 15px rgba(230, 126, 34, 0.9);
+        transform: translateY(-2px);
+    }
+
+/* Kết quả trả lời */
+#challenge-result {
+    font-family: 'Space Mono', monospace;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    text-align: center;
+    min-height: 40px;
+    background-color: #2c3e50;
+    color: #f0f0f0;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.result-message.correct {
+    color: #2ecc71; /* Xanh lá */
+    border: 1px solid #2ecc71;
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.6);
+}
+
+.result-message.incorrect {
+    color: #e74c3c; /* Đỏ */
+    border: 1px solid #e74c3c;
+    box-shadow: 0 0 8px rgba(231, 76, 60, 0.6);
+}
+
+/* Footer Modal */
+.challenge-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(52, 152, 219, 0.3);
+}
+
+    .challenge-footer small {
+        color: #95a5a6;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.7em;
+    }
+
+/* --- ĐIỀU CHỈNH DARK MODE CHO MODAL (Để nó giữ nguyên vẻ ngoài Tech) --- */
+/* Modal này được thiết kế theo tông Dark Mode ngay từ đầu, nên chỉ cần đảm bảo
+   nó không bị ảnh hưởng bởi các style Light Mode khác. */
+body.dark-mode .modal-content {
+    background-color: #1c2533;
+    border-color: #3498db;
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.7), 0 0 25px rgba(0, 0, 0, 0.8);
+}
+/* Hiệu ứng Rung lắc (Jiggle) khi check đáp án */
+.modal-content.jiggle-active {
+    animation: jiggle 0.15s ease-out;
+}

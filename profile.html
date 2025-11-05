@@ -6,37 +6,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROFILE CỦA TÔI - Minh GM</title>
     <link rel="stylesheet" href="profile.css">
+    <script>
+        // BƯỚC 1: BIẾN PHIÊN BẢN (VERSION)
+        const CACHE_VERSION = "0.0.1"; 
+
+        // BƯỚC 2: HÀM PHÁ CACHE
+        function applyCacheBusting() {
+            // Phá Cache cho CSS
+            document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                link.href = link.href.split('?')[0] + '?v=' + CACHE_VERSION;
+            });
+
+            // Phá Cache cho JS
+            document.querySelectorAll('script[src]').forEach(script => {
+                script.src = script.src.split('?')[0] + '?v=' + CACHE_VERSION;
+            });
+        }
+
+        // Chạy hàm ngay khi trang tải xong
+        window.onload = applyCacheBusting;
+    </script>
 </head>
 <body>
 
-    <button id="mode-toggle">Chuyển sang Dark Mode 🌙</button>
+    <button id="mode-toggle" class="mode-toggle-btn">Chuyển sang Dark Mode 🌙</button>
 
     <div class="profile-layout">
-
+        <div class="grid-overlay"></div>
         <header class="main-header">
             <img src="avatar.jpg" alt="Avatar" class="avatar">
             <h1>Minh GM</h1>
-            <p class="tagline">"Thánh Diệt BUG · Kẻ Phá Giới Hạn · Trùm Giải Thuật Toán"</p>
+            <p class="tagline" id="typewriter-tagline">"Thánh Diệt BUG · Kẻ Phá Giới Hạn · Trùm Giải Thuật Toán"</p>
         </header>
 
         <div class="content-sections">
             <section class="info">
-                <h2>Ngôn ngữ đã học</h2>
-                <ul class="languages">
-                    <li>Scratch</li>
-                    <li>Python</li>
-                    <li>C++</li>
-                    <li>JavaScript</li>
-                </ul>
-            </section>
+                <section class="section-container">
+                    <h2>Ngôn ngữ đã học</h2>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" data-level="70"></div>
+                            </div>
+                            <span class="skill-percentage">70%</span>
+                        </div>
 
-            <section class="info">
-                <h2>Dự án</h2>
-                <ul>
-                    <li>Web Profile</li>
-                    <li>Game Clicker</li>
-                    <li>Web TR</li>
-                </ul>
+                        <div class="skill-item">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" data-level="50"></div>
+                            </div>
+                            <span class="skill-percentage">50%</span>
+                        </div>
+
+                        <div class="skill-item" id="cpp-skill-bar" onclick="openCppChallenge()">
+                            <span class="skill-name">C++</span>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" data-level="95"></div>
+                            </div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <span class="skill-name">Scratch</span>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" data-level="85"></div>
+                            </div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <section class="section-container project-log-section">
+                <h2>📁 Nhật ký Dự án</h2>
+                <pre class="project-log" id="project-terminal-log">
+> Initiating ProjectLog.exe...
+[INFO] System Status: ONLINE
+[1] Web Profile - Personal ID Matrix. (Status: ONLINE)
+[2] Game Clicker - High-speed transaction simulation. (Status: ARCHIVED)
+[3] Web Troll - Automated security testing tool. (Status: ONLINE)
+[SUCCESS] Log execution complete. Waiting for command.
+                </pre>
             </section>
 
             <section class="info contact-section">
@@ -49,29 +100,56 @@
         </div>
 
     </div>
+    <div class="glitch-overlay"></div>
+    <script src="profile.js"></script>
+    <audio id="audio-boot" src="sfx_boot.mp3" preload="auto"></audio>
+    <audio id="audio-typing" src="sfx_typing.mp3" preload="auto"></audio>
+    <audio id="audio-confirm" src="sfx_confirm.mp3" preload="auto"></audio>
+    <div class="static-noise-overlay"></div>
+    <div class="scanline-overlay"></div>
+    <div id="cpp-modal" class="modal-challenge">
+        <div id="cpp-modal-content" class="modal-content">
+            <span class="close-btn" onclick="closeCppChallenge()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+            </span>
 
-    <script>
-        const toggleButton = document.getElementById('mode-toggle');
-        const body = document.body;
+            <header class="challenge-header">
+                <span class="trophy-icon">🏆</span>
+                <h2>Thử Thách C++ Cấp Cao</h2>
+                <p>Kiểm tra sự tinh tế bạn dành cho logic C++</p>
+            </header>
 
-        const savedMode = localStorage.getItem('darkMode');
-        if (savedMode === 'enabled') {
-            body.classList.add('dark-mode');
-            toggleButton.innerText = 'Chuyển sang Light Mode ☀️';
-        }
+            <div class="code-area-container">
+                <div class="code-header">#cpp</div>
+                <pre id="challenge-code" class="code-snippet">
+// Hệ thống đang tải thử thách...
+// Vui lòng chờ 1s...
+            </pre>
+            </div>
 
-        toggleButton.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
+            <div class="interaction-area">
+                <p class="question-text">Nhập kết quả cuối cùng là bao nhiêu:</p>
+                <div class="input-group">
+                    <input type="text" id="challenge-answer-input" placeholder="Nhập câu trả lời của bạn..." required>
+                    <button id="run-code-btn" class="action-btn run-btn" onclick="checkAnswer()">Chạy Code</button>
+                </div>
 
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('darkMode', 'enabled');
-                toggleButton.innerText = 'Chuyển sang Light Mode ☀️';
-            } else {
-                localStorage.setItem('darkMode', 'disabled');
-                toggleButton.innerText = 'Chuyển sang Dark Mode 🌙';
-            }
-        });
-    </script>
+                <button id="next-challenge-btn" class="action-btn next-btn">Thử Thách Khác</button>
 
+                <p id="challenge-result" class="result-message">
+                    Kết quả sẽ hiển thị ở đây.
+                </p>
+            </div>
+
+            <footer class="challenge-footer">
+                <small>*Powered by C++ & WebAssembly (Wasm)</small>
+            </footer>
+
+        </div>
+    </div>
 </body>
 </html>

@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đang tải...</title>
     <link rel="stylesheet" href="loading1.css">
+    <script>
+        // BƯỚC 1: BIẾN PHIÊN BẢN (VERSION)
+        const CACHE_VERSION = "0.0.1"; 
+
+        // BƯỚC 2: HÀM PHÁ CACHE
+        function applyCacheBusting() {
+            // Phá Cache cho CSS
+            document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                link.href = link.href.split('?')[0] + '?v=' + CACHE_VERSION;
+            });
+
+            // Phá Cache cho JS
+            document.querySelectorAll('script[src]').forEach(script => {
+                script.src = script.src.split('?')[0] + '?v=' + CACHE_VERSION;
+            });
+        }
+
+        // Chạy hàm ngay khi trang tải xong
+        window.onload = applyCacheBusting;
+    </script>
 </head>
 <body>
     <canvas id="matrix-canvas"></canvas>
