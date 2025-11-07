@@ -503,10 +503,11 @@ function tiltEffect() {
 // Khai báo các biến DOM cần thiết cho game (giả định các ID này sẽ được thêm vào HTML)
 let challengesData = [];
 let currentChallenge = null; // Biến lưu trữ thử thách hiện tại
-const challengeModal = document.getElementById('cpp-modal');
-const challengeContainer = document.getElementById('challenge-code');
-const challengeInput = document.getElementById('challenge-answer-input');
-const resultElement = document.getElementById('challenge-result');
+// --- CHANGED: Don't query DOM at top-level (elements may not exist yet) ---
+let challengeModal = null;
+let challengeContainer = null;
+let challengeInput = null;
+let resultElement = null;
 
 // --- HÀM 1: LOAD DỮ LIỆU TỪ JSON (Chạy 1 lần khi trang tải) ---
 async function loadChallenges() {
@@ -625,6 +626,12 @@ function checkAnswer() {
 // === CẬP NHẬT HÀM KHỞI TẠO CHÍNH (window.onload) ===
 // ===============================================
 window.onload = function () {
+    // --- NEW: query DOM elements after load so they are found ---
+    challengeModal = document.getElementById('cpp-modal');
+    challengeContainer = document.getElementById('challenge-code');
+    challengeInput = document.getElementById('challenge-answer-input');
+    resultElement = document.getElementById('challenge-result');
+
     // 1. Phát Âm thanh Khởi động Hệ thống
     playSFX('audio-boot');
 
