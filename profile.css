@@ -845,11 +845,9 @@ body.dark-mode .mode-toggle-btn {
         filter: hue-rotate(360deg);
     }
 }
-
-/* CSS cho hiệu ứng "nạp lại dữ liệu" (có thể thêm sau nếu muốn) */
-.loading-screen {
-    /* Tương tự glitch-overlay nhưng có thể thêm text loading */
-}
+/* ====================================
+   4. HIỆU ỨNG ĐÁNH MÁY TERMINAL TRÊN TAGLINE
+   ==================================== */
 /* --- PHẦN MỚI: HIỆU ỨNG ĐÁNH MÁY TERMINAL --- */
 #typewriter-tagline {
     /* Đảm bảo nội dung ban đầu không hiển thị hoặc chỉ hiển thị con trỏ */
@@ -874,18 +872,19 @@ body.dark-mode .mode-toggle-btn {
 body.dark-mode #typewriter-tagline {
     border-right: .15em solid #3498db;
 }
-
-body.dark-mode @keyframes blink-caret {
-    from, to
-
-{
-    border-color: transparent
+@keyframes blink-caret {
+    from, to{
+        border-color: transparent
+    } 50% {
+        border-color: #3498db;
+    }
 }
 
-50% {
-    border-color: #3498db;
+body.dark-mode .typewriter-tagline {
+    border-right: .15em solid #3498db;
+    animation: blink-caret 0.7s step-end infinite;
 }
-}
+
 /* CSS Code Snippet */
 @keyframes jiggle {
     0%, 100% {
