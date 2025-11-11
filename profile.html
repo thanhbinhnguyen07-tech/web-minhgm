@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="profile.css">
     <script>
         // BƯỚC 1: BIẾN PHIÊN BẢN (VERSION)
-        const CACHE_VERSION = "0.0.3"; 
+        const CACHE_VERSION = "0.0.4"; 
 
         // BƯỚC 2: HÀM PHÁ CACHE
         function applyCacheBusting() {
@@ -30,7 +30,9 @@
 <body>
 
     <button id="mode-toggle" class="mode-toggle-btn">Chuyển sang Dark Mode 🌙</button>
-
+    <div class="score-display">
+        🌟 Sao đã thu thập: <span id="star-count">0</span>
+    </div>
     <div class="profile-layout">
         <div class="grid-overlay"></div>
         <header class="main-header">
@@ -44,7 +46,7 @@
                 <section class="section-container">
                     <h2>Ngôn ngữ đã học</h2>
                     <div class="skills-list">
-                        <div class="skill-item">
+                        <div class="skill-item" id="python-skill-bar" onclick="openPythonChallenge()">
                             <span class="skill-name">Python</span>
                             <div class="skill-bar-container">
                                 <div class="skill-bar" data-level="70"></div>
@@ -135,7 +137,7 @@
                 <p class="question-text">Nhập kết quả cuối cùng là bao nhiêu:</p>
                 <div class="input-group">
                     <input type="text" id="challenge-answer-input" placeholder="Nhập câu trả lời của bạn..." required>
-                    <button id="run-code-btn" class="action-btn run-btn" onclick="checkAnswer()">Chạy Code</button>
+                    <button id="run-code-btn" class="action-btn run-btn" onclick="checkCppAnswer()">Chạy Code</button>
                 </div>
 
                 <button id="next-challenge-btn" class="action-btn next-btn">Thử Thách Khác</button>
@@ -151,5 +153,43 @@
 
         </div>
     </div>
+    <div id="python-modal" class="modal-challenge"> 
+    <div id="python-modal-content" class="modal-content">
+        <span class="close-btn" onclick="closePythonChallenge()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+        </span>
+
+        <header class="challenge-header">
+            <span class="trophy-icon">🐍</span> <h2>Thử Thách Pythonic Cấp Cao</h2>
+            <p id="python-challenge-title">Kiểm tra tư duy Tối ưu hóa Code của bạn</p> </header>
+
+        <div class="code-area-container">
+            <div class="code-header">#python</div>
+            <pre id="python-code-snippet" class="code-snippet">
+</pre>
+        </div>
+        <div class="interaction-area">
+            <p class="question-text">Viết lại đoạn code trên thành 1 dòng "Pythonic" (hoặc tối ưu) nhất:</p>
+            <div class="input-group">
+                <input type="text" id="python-input" placeholder="Nhập code của bạn..." required>
+                <button id="run-python-btn" class="action-btn run-btn" onclick="checkPythonAnswer()">Kiểm Tra & Thu Sao</button>
+            </div>
+
+            <button id="python-next-challenge-btn" class="action-btn next-btn" style="display:none;">Thử Thách Khác</button>
+
+            <p id="python-challenge-result" class="result-message">
+                Kết quả kiểm tra sẽ hiển thị ở đây.
+            </p>
+        </div>
+
+        <footer class="challenge-footer">
+            <small>*Python Logic Check (Powered by JS)</small>
+        </footer>
+    </div>
+</div>
 </body>
 </html>

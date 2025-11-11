@@ -1,0 +1,317 @@
+[
+  {
+    "id": 1,
+    "language": "Python",
+    "title": "Hoán đổi Biến (Swap)",
+    "question": "Hoán đổi giá trị của hai biến 'a' và 'b' bằng 1 dòng code duy nhất, KHÔNG dùng biến tạm.",
+    "code_snippet": "a = 10\nb = 20",
+    "correct_answer": "a, b = b, a",
+    "answer_info": "Sử dụng tính năng Tuple Packing/Unpacking của Python. (Pythonic!)"
+  },
+  {
+    "id": 2,
+    "language": "Python",
+    "title": "In chuỗi Lặp lại",
+    "question": "Làm thế nào để in chuỗi 'Hello' lặp lại 5 lần, chỉ bằng 1 dòng code?",
+    "code_snippet": "text = 'Hello'",
+    "correct_answer": "print(text * 5)",
+    "answer_info": "Sử dụng toán tử nhân `*` cho chuỗi."
+  },
+  {
+    "id": 3,
+    "language": "Python",
+    "title": "Chuỗi Ngược",
+    "question": "Viết 1 dòng code để đảo ngược chuỗi 'Pythonic' thành 'cinohytP'.",
+    "code_snippet": "s = 'Pythonic'",
+    "correct_answer": "s[::-1]",
+    "answer_info": "Sử dụng Slicing với bước nhảy âm (Step Size)."
+  },
+  {
+    "id": 4,
+    "language": "Python",
+    "title": "Kiểm tra Chuỗi Rỗng",
+    "question": "Viết điều kiện IF đơn giản để kiểm tra xem chuỗi 's' có rỗng hay không. (Sử dụng tính chất 'Falsy' của chuỗi)",
+    "code_snippet": "s = ''",
+    "correct_answer": "if not s:",
+    "answer_info": "Trong Python, chuỗi rỗng (`''`) được coi là giá trị Falsy."
+  },
+  {
+    "id": 5,
+    "language": "Python",
+    "title": "Kiểm tra trong List",
+    "question": "Viết điều kiện IF để kiểm tra xem số 5 có tồn tại trong list 'data' hay không.",
+    "code_snippet": "data = [1, 2, 5, 8]",
+    "correct_answer": "if 5 in data:",
+    "answer_info": "Sử dụng toán tử Membership (`in`)."
+  },
+  {
+    "id": 6,
+    "language": "Python",
+    "title": "Ghép List thành Chuỗi",
+    "question": "Ghép các phần tử của list 'words' thành một chuỗi duy nhất, cách nhau bằng dấu cách.",
+    "code_snippet": "words = ['Hello', 'World', 'Python']",
+    "correct_answer": "' '.join(words)",
+    "answer_info": "Sử dụng phương thức `join()` của chuỗi."
+  },
+  {
+    "id": 7,
+    "language": "Python",
+    "title": "Cắt Chuỗi (Slice)",
+    "question": "Lấy 5 ký tự đầu tiên của chuỗi 'Programming' bằng Slicing.",
+    "code_snippet": "s = 'Programming'",
+    "correct_answer": "s[:5]",
+    "answer_info": "Slicing: [start:stop:step]. Bỏ qua start là lấy từ đầu."
+  },
+  {
+    "id": 8,
+    "language": "Python",
+    "title": "Làm tròn Số",
+    "question": "Làm tròn số 'pi' thành 2 chữ số thập phân.",
+    "code_snippet": "pi = 3.14159",
+    "correct_answer": "round(pi, 2)",
+  "answer_info": "Sử dụng hàm `round()` tích hợp sẵn."
+  },
+  {
+    "id": 9,
+    "language": "Python",
+    "title": "Tạo List Rỗng",
+    "question": "Tạo một list rỗng tên 'my_list' (Cách nhanh nhất, không dùng `list()`).",
+    "code_snippet": "",
+    "correct_answer": "my_list = []",
+    "answer_info": "Sử dụng cặp ngoặc vuông `[]`."
+  },
+  {
+    "id": 10,
+    "language": "Python",
+    "title": "Dictionary Keys",
+    "question": "Lấy tất cả các khóa (keys) của dictionary 'data' dưới dạng list.",
+    "code_snippet": "data = {'a': 1, 'b': 2}",
+    "correct_answer": "list(data.keys())",
+    "answer_info": "Sử dụng phương thức `keys()` và chuyển nó thành list."
+  },
+  {
+    "id": 11,
+    "language": "Python",
+    "title": "Kiểm tra Tuple/List",
+    "question": "Kiểm tra xem biến 'x' có phải là kiểu tuple hay list không, bằng 1 dòng code.",
+    "code_snippet": "x = [1, 2]",
+    "correct_answer": "isinstance(x, (list, tuple))",
+    "answer_info": "Sử dụng `isinstance()` với Tuple chứa nhiều kiểu dữ liệu."
+  },
+  {
+    "id": 12,
+    "language": "Python",
+    "title": "Unpack Tuple",
+    "question": "Làm thế nào để gán các giá trị của tuple 'cords' vào 3 biến 'x', 'y', 'z'?",
+    "code_snippet": "cords = (10, 20, 30)",
+    "correct_answer": "x, y, z = cords",
+    "answer_info": "Sử dụng Tuple Unpacking (giải nén)."
+  },
+  {
+    "id": 13,
+    "language": "Python",
+    "title": "Lấy giá trị mặc định",
+    "question": "Lấy giá trị của 'age' từ dictionary 'user', nếu không tồn tại thì gán giá trị mặc định là 0.",
+    "code_snippet": "user = {'name': 'Minh'}",
+    "correct_answer": "user.get('age', 0)",
+    "answer_info": "Sử dụng phương thức `get()` của Dictionary."
+  },
+  {
+    "id": 14,
+    "language": "Python",
+    "title": "Tạo Set từ List",
+    "question": "Chuyển list 'numbers' thành một set (loại bỏ các số trùng lặp).",
+    "code_snippet": "numbers = [1, 2, 2, 3]",
+    "correct_answer": "set(numbers)",
+    "answer_info": "Sử dụng hàm `set()` để loại bỏ trùng lặp."
+  },
+  {
+    "id": 15,
+    "language": "Python",
+    "title": "Boolean Tối ưu",
+    "question": "Viết 1 dòng code để biến đổi giá trị boolean 'is_active' thành giá trị ngược lại.",
+    "code_snippet": "is_active = True",
+    "correct_answer": "not is_active",
+    "answer_info": "Sử dụng toán tử `not`."
+  },
+  {
+    "id": 16,
+    "language": "Python",
+    "title": "F-String",
+    "question": "Sử dụng F-String để tạo chuỗi 'Tên tôi là Minh, tuổi 14'.",
+    "code_snippet": "name = 'Minh'\nage = 14",
+    "correct_answer": "f'Tên tôi là {name}, tuổi {age}'",
+    "answer_info": "F-String là cách format chuỗi hiện đại và nhanh nhất."
+  },
+  {
+    "id": 17,
+    "language": "Python",
+    "title": "Lấy Phần tử Cuối",
+  "question": "Lấy phần tử cuối cùng của list 'data' bằng Slicing.",
+    "code_snippet": "data = [1, 5, 8, 10]",
+    "correct_answer": "data[-1]",
+    "answer_info": "Sử dụng chỉ mục âm để đếm ngược từ cuối list."
+  },
+  {
+    "id": 18,
+    "language": "Python",
+    "title": "Chuẩn hóa Chuỗi",
+    "question": "Chuyển chuỗi 'PYthon' thành chữ thường toàn bộ.",
+    "code_snippet": "s = 'PYthon'",
+    "correct_answer": "s.lower()",
+    "answer_info": "Sử dụng phương thức `lower()`."
+  },
+  {
+    "id": 19,
+    "language": "Python",
+    "title": "Kiểm tra Bắt đầu",
+    "question": "Kiểm tra xem chuỗi 'filename.py' có bắt đầu bằng 'file' không?",
+    "code_snippet": "filename = 'filename.py'",
+    "correct_answer": "filename.startswith('file')",
+    "answer_info": "Sử dụng phương thức `startswith()`."
+  },
+  {
+    "id": 20,
+    "language": "Python",
+    "title": "Tính Độ dài",
+    "question": "Tính độ dài (số lượng phần tử) của list 'items'.",
+    "code_snippet": "items = [1, 2, 3, 4, 5]",
+    "correct_answer": "len(items)",
+    "answer_info": "Sử dụng hàm `len()`."
+  },
+  {
+    "id": 21,
+    "language": "Python",
+    "title": "Loại bỏ trùng lặp List",
+    "question": "Loại bỏ các phần tử trùng lặp trong list 'data' và trả về list mới, bằng 1 dòng code.",
+    "code_snippet": "data = [1, 2, 3, 2, 4, 1]",
+    "correct_answer": "list(set(data))",
+    "answer_info": "Chuyển List -> Set (loại trùng lặp) -> List."
+  },
+  {
+    "id": 22,
+    "language": "Python",
+    "title": "List Comprehension Cơ bản",
+    "question": "Sử dụng List Comprehension để tạo một list mới chứa bình phương của các số từ 1 đến 5.",
+    "code_snippet": "",
+    "correct_answer": "[i*i for i in range(1, 6)]",
+    "answer_info": "List Comprehension là cách tạo list nhanh và sạch nhất."
+  },
+  {
+    "id": 23,
+    "language": "Python",
+    "title": "Dictionary Merge (Python 3.9+)",
+    "question": "Hợp nhất dictionary 'd1' và 'd2' thành 1 dictionary mới 'd3' bằng 1 toán tử.",
+    "code_snippet": "d1 = {'a': 1}\nd2 = {'b': 2}",
+    "correct_answer": "d3 = d1 | d2",
+    "answer_info": "Sử dụng toán tử Merge (`|`) cho Dictionary."
+  },
+  {
+    "id": 24,
+    "language": "Python",
+    "title": "Kiểm tra Tất cả (All)",
+    "question": "Kiểm tra xem TẤT CẢ các số trong list 'numbers' có lớn hơn 0 hay không.",
+    "code_snippet": "numbers = [1, 2, 3, 4]",
+    "correct_answer": "all(n > 0 for n in numbers)",
+    "answer_info": "Sử dụng hàm `all()` và Generator Expression."
+  },
+  {
+    "id": 25,
+    "language": "Python",
+    "title": "Xếp List",
+  "question": "Sắp xếp list 'data' theo thứ tự **giảm dần** và trả về list mới (không thay đổi list cũ).",
+    "code_snippet": "data = [3, 1, 2]",
+    "correct_answer": "sorted(data, reverse=True)",
+    "answer_info": "Sử dụng hàm `sorted()`."
+  },
+  {
+    "id": 26,
+    "language": "Python",
+    "title": "Dictionary Comprehension",
+    "question": "Tạo Dictionary từ list 'words', trong đó Key là từ và Value là độ dài của từ đó.",
+    "code_snippet": "words = ['a', 'b', 'cde']",
+    "correct_answer": "{w: len(w) for w in words}",
+    "answer_info": "Sử dụng Dictionary Comprehension. (Rất Pythonic!)"
+  },
+  {
+    "id": 27,
+    "language": "Python",
+    "title": "Filt (Lọc)",
+    "question": "Sử dụng List Comprehension để tạo list mới chỉ chứa các số **chẵn** từ list 'numbers'.",
+    "code_snippet": "numbers = [1, 2, 3, 4, 5]",
+    "correct_answer": "[n for n in numbers if n % 2 == 0]",
+    "answer_info": "List Comprehension với điều kiện lọc (`if`)."
+  },
+  {
+    "id": 28,
+    "language": "Python",
+    "title": "Map/Tối ưu hóa Loop",
+    "question": "Sử dụng List Comprehension để tạo list mới chứa **tổng** của các cặp số từ 2 list 'a' và 'b' (a[i] + b[i]).",
+    "code_snippet": "a = [1, 2]\nb = [10, 20]",
+    "correct_answer": "[x + y for x, y in zip(a, b)]",
+    "answer_info": "Sử dụng hàm `zip()` kết hợp với List Comprehension."
+  },
+  {
+    "id": 29,
+    "language": "Python",
+    "title": "Unpacking Mở rộng",
+    "question": "Sử dụng toán tử Unpacking (`*`) để lấy số đầu tiên vào biến 'first', và các số còn lại vào list 'rest'.",
+    "code_snippet": "data = [1, 2, 3, 4]",
+    "correct_answer": "first, *rest = data",
+    "answer_info": "Sử dụng Extended Unpacking (PEP 3132), rất mạnh mẽ."
+  },
+  {
+    "id": 30,
+    "language": "Python",
+    "title": "Hàm Lambda (Vô danh)",
+    "question": "Tạo một hàm lambda trả về tích (nhân) của hai tham số 'x' và 'y'.",
+    "code_snippet": "",
+    "correct_answer": "multiply = lambda x, y: x * y",
+    "answer_info": "Hàm Lambda là hàm vô danh 1 dòng. Rất hiệu quả cho các tác vụ nhỏ."
+  },
+  {
+    "id": 31,
+    "language": "Python",
+    "title": "Generator Expression",
+    "question": "Sử dụng Generator Expression để tính **tổng** các số **lẻ** từ 1 đến 1000. (Tư duy tối ưu bộ nhớ).",
+    "code_snippet": "",
+    "correct_answer": "sum(i for i in range(1, 1001) if i % 2 != 0)",
+    "answer_info": "Generator (dùng ngoặc đơn `()`) tối ưu hơn List Comprehension (dùng ngoặc vuông `[]`) cho `sum()` vì nó không tạo list tạm thời."
+  },
+  {
+    "id": 32,
+    "language": "Python",
+    "title": "Count Tối ưu",
+    "question": "Đếm số lần xuất hiện của ký tự 'a' trong chuỗi 'banana'. (Không dùng vòng lặp for)",
+    "code_snippet": "s = 'banana'",
+    "correct_answer": "s.count('a')",
+    "answer_info": "Sử dụng phương thức `count()` tích hợp, nhanh hơn nhiều so với viết vòng lặp."
+  },
+  {
+    "id": 33,
+    "language": "Python",
+    "title": "If/Else Ternary (Điều kiện 1 dòng)",
+    "question": "Gán 'result' là 'Chẵn' nếu 'num' chẵn, ngược lại là 'Lẻ'.",
+    "code_snippet": "num = 4",
+    "correct_answer": "result = 'Chẵn' if num % 2 == 0 else 'Lẻ'",
+    "answer_info": "Ternary Operator (Toán tử 3 ngôi) là cấu trúc if/else 1 dòng."
+  },
+  {
+    "id": 34,
+    "language": "Python",
+    "title": "Sort theo Key",
+    "question": "Sắp xếp list 'words' dựa trên **độ dài** của từ, không phải theo thứ tự bảng chữ cái.",
+    "code_snippet": "words = ['ccc', 'a', 'bb']",
+    "correct_answer": "sorted(words, key=len)",
+    "answer_info": "Sử dụng tham số `key` để định nghĩa tiêu chí sắp xếp, rất mạnh mẽ."
+  },
+  {
+    "id": 35,
+    "language": "Python",
+    "title": "Tối ưu hóa I/O",
+    "question": "Viết 1 dòng code để đọc toàn bộ nội dung của file 'data.txt' vào biến 'content' (Sử dụng cấu trúc context manager an toàn).",
+    "code_snippet": "",
+    "correct_answer": "with open('data.txt') as f: content = f.read()",
+    "answer_info": "Sử dụng `with open(...)` là cách an toàn và Pythonic nhất để làm việc với file I/O (tự động đóng file)."
+  }
+]

@@ -3,7 +3,7 @@
     "id": 1,
     "difficulty": "Easy",
     "topic": "Operators",
-    "code_snippet": "int a = 5; int b = a++ * 2; // Giá trị của 'b' sau dòng này là bao nhiêu?",
+    "code_snippet": "int a = 5;\nint b = a++ * 2; \n// Giá trị của 'b' sau dòng này là bao nhiêu?",
     "correct_answer": "10",
     "explanation": "Toán tử hậu tố 'a++' sử dụng giá trị cũ của 'a' (là 5) để tính 'b', sau đó mới tăng 'a' lên 6."
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "difficulty": "Easy",
     "topic": "Data Types",
-    "code_snippet": "int x = 10; int y = 3; int result = x / y; // Giá trị của 'result' là bao nhiêu?",
+    "code_snippet": "int x = 10;\nint y = 3;\nint result = x / y; \n// Giá trị của 'result' là bao nhiêu?",
     "correct_answer": "3",
     "explanation": "Phép chia số nguyên (int/int) sẽ trả về phần nguyên, bỏ qua phần thập phân."
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "difficulty": "Medium",
     "topic": "Control Flow",
-    "code_snippet": "int count = 0; int i = 0; while(i < 5) { if (i % 2 == 0) { i++; continue; } count++; i++; } // Giá trị của 'count' là bao nhiêu?",
+    "code_snippet": "int count = 0;\nint i = 0;\nwhile(i < 5) {\n\tif (i % 2 == 0) {\n\t\ti++;\n\t\tcontinue;\n\t}\n\tcount++;\n\ti++;\n}\n// Giá trị của 'count' là bao nhiêu?",
     "correct_answer": "2",
     "explanation": "Lệnh 'continue' bỏ qua lần lặp hiện tại khi 'i' là 0, 2 và 4. 'count' chỉ tăng khi 'i' là 1 và 3."
   },
@@ -27,7 +27,7 @@
     "id": 4,
     "difficulty": "Medium",
     "topic": "Operators",
-    "code_snippet": "int a = 10; int b = 2; int c = 5; int result = a + b * c; // Giá trị của 'result' là bao nhiêu?",
+    "code_snippet": "int a = 10;\nint b = 2;\nint c = 5;\nint result = a + b * c; \n// Giá trị của 'result' là bao nhiêu?",
     "correct_answer": "20",
     "explanation": "Toán tử nhân (*) có độ ưu tiên cao hơn cộng (+). Tính 2 * 5 = 10 trước, sau đó 10 + 10 = 20."
   },
@@ -35,7 +35,7 @@
     "id": 5,
     "difficulty": "Medium",
     "topic": "Type Casting",
-    "code_snippet": "int i = 5; float f = 2.0f; float result = i / f; // Giá trị của 'result' là bao nhiêu? (Làm tròn 1 chữ số)",
+    "code_snippet": "int i = 5;\nfloat f = 2.0f;\nfloat result = i / f; \n// Giá trị của 'result' là bao nhiêu? (Làm tròn 1 chữ số)",
     "correct_answer": "2.5",
     "explanation": "Khi chia int cho float, int sẽ được nâng cấp lên float, dẫn đến phép chia thập phân (5.0 / 2.0)."
   },
@@ -43,7 +43,7 @@
     "id": 6,
     "difficulty": "Hard",
     "topic": "Bitwise Operators",
-    "code_snippet": "int x = 5; // (0101 trong hệ nhị phân) int result = x << 1; // Giá trị của 'result' là bao nhiêu?",
+    "code_snippet": "int x = 5; // (0101 trong hệ nhị phân)\nint result = x << 1; \n// Giá trị của 'result' là bao nhiêu?",
     "correct_answer": "10",
     "explanation": "Toán tử dịch bit trái '<< 1' tương đương với nhân với 2 (0101 -> 1010)."
   },
@@ -51,7 +51,7 @@
     "id": 7,
     "difficulty": "Hard",
     "topic": "Pre-Post Increment",
-    "code_snippet": "int i = 1; i = i++ + ++i; // Giá trị của 'i' là bao nhiêu? (Gõ 'Undefined' nếu không xác định)",
+    "code_snippet": "int i = 1;\ni = i++ + ++i; \n// Giá trị của 'i' là bao nhiêu? (Gõ 'Undefined' nếu không xác định)",
     "correct_answer": "Undefined",
     "explanation": "Thay đổi và sử dụng biến 'i' nhiều lần trong cùng một biểu thức mà không có điểm tuần tự là hành vi không xác định (Undefined Behavior)."
   },
@@ -59,7 +59,7 @@
     "id": 8,
     "difficulty": "Medium",
     "topic": "Logical Operators",
-    "code_snippet": "int x = 5; int y = 0; bool b = (x++ || y++); // Giá trị của 'x' sau biểu thức là bao nhiêu?",
+    "code_snippet": "int x = 5;\nint y = 0;\nbool b = (x++ || y++); \n// Giá trị của 'x' sau biểu thức là bao nhiêu?",
     "correct_answer": "6",
 "explanation": "Toán tử '||' có cơ chế đánh giá ngắn mạch (short-circuit). 'x++' là 5 (true), nên vế 'y++' không được tính. 'x' vẫn được tăng lên 6."
   },
@@ -67,7 +67,7 @@
     "id": 9,
     "difficulty": "Easy",
     "topic": "Operators",
-    "code_snippet": "int a = 10; int b = a * (2 + 3); // Giá trị của 'b' là bao nhiêu?",
+    "code_snippet": "int a = 10;\nint b = a * (2 + 3); \n// Giá trị của 'b' là bao nhiêu?",
     "correct_answer": "50",
     "explanation": "Phép tính trong ngoặc được ưu tiên trước: 10 * 5 = 50."
   },
@@ -75,7 +75,7 @@
     "id": 10,
     "difficulty": "Hard",
     "topic": "Scope",
-    "code_snippet": "int result = 5; { int result = 10; } // Giá trị của 'result' (bên ngoài dấu ngoặc nhọn) là bao nhiêu?",
+    "code_snippet": "int result = 5;\n{\n\tint result = 10; \n}\n// Giá trị của 'result' (bên ngoài dấu ngoặc nhọn) là bao nhiêu?",
     "correct_answer": "5",
     "explanation": "Biến 'result' bên trong dấu ngoặc nhọn là một biến cục bộ, không ảnh hưởng đến biến 'result' bên ngoài."
   },
@@ -83,7 +83,7 @@
     "id": 11,
     "difficulty": "Medium",
     "topic": "Data Types",
-    "code_snippet": "int x = 7; float y = 2.0f; int result = x / y; // Giá trị của 'result' là bao nhiêu?",
+    "code_snippet": "int x = 7;\nfloat y = 2.0f;\nint result = x / y; \n// Giá trị của 'result' là bao nhiêu?",
     "correct_answer": "3",
     "explanation": "Kết quả phép chia là 3.5, nhưng khi gán cho biến int 'result', nó sẽ bị cắt bớt (truncate) thành 3."
   },
@@ -91,7 +91,7 @@
     "id": 12,
     "difficulty": "Medium",
     "topic": "Constants",
-    "code_snippet": "const int MAX = 100; // MAX có thể thay đổi sau khi khởi tạo không? (Gõ 'Yes' hoặc 'No')",
+    "code_snippet": "const int MAX = 100; \n// MAX có thể thay đổi sau khi khởi tạo không? (Gõ 'Yes' hoặc 'No')",
     "correct_answer": "No",
     "explanation": "Từ khóa 'const' đảm bảo giá trị của biến không thể bị thay đổi sau khi khởi tạo."
   },
@@ -99,7 +99,7 @@
     "id": 13,
     "difficulty": "Hard",
     "topic": "Type Casting",
-    "code_snippet": "int a = 10; double d = 3.5; double result = a + d; // Kiểu dữ liệu của 'result' là gì? (Gõ 'int' hoặc 'double')",
+    "code_snippet": "int a = 10;\ndouble d = 3.5;\ndouble result = a + d; \n// Kiểu dữ liệu của 'result' là gì? (Gõ 'int' hoặc 'double')",
     "correct_answer": "double",
     "explanation": "Khi cộng int với double, int sẽ được tự động chuyển đổi thành double để thực hiện phép toán."
   },
@@ -107,7 +107,7 @@
     "id": 14,
     "difficulty": "Medium",
     "topic": "Operators",
-    "code_snippet": "int x = 20; int y = x % 7; // Giá trị của 'y' là bao nhiêu?",
+    "code_snippet": "int x = 20;\nint y = x % 7; \n// Giá trị của 'y' là bao nhiêu?",
     "correct_answer": "6",
     "explanation": "Toán tử % (modulo) trả về phần dư của phép chia: 20 chia 7 được 2, dư 6."
   },
@@ -115,7 +115,7 @@
     "id": 15,
     "difficulty": "Medium",
     "topic": "Logical Operators",
-    "code_snippet": "bool a = false; bool b = true; bool result = !a && b; // Giá trị của 'result' là gì? (Gõ 'true' hoặc 'false')",
+    "code_snippet": "bool a = false;\nbool b = true;\nbool result = !a && b; \n// Giá trị của 'result' là gì? (Gõ 'true' hoặc 'false')",
     "correct_answer": "true",
     "explanation": "Toán tử '!' (NOT) biến 'a' thành true. true AND true bằng true."
   }

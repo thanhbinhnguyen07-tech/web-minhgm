@@ -1,17 +1,42 @@
 ﻿/**
  * ===============================================
- * FILE: profile.js - ĐÃ CHỈNH SỬA CHO CÔ BÌNH
- * CHỨC NĂNG: Xử lý tất cả các hiệu ứng tương tác (Typewriter, Terminal Log, Cursor, Audio FX, Data Analyzer Tabs, Scroll Glitch, Dark Mode)
+ * FILE: profile.js - ĐÃ SỬA LỖI VÀ HOÀN THIỆN (FULL FEATURES)
+ * CHỨC NĂNG: Xử lý tất cả các hiệu ứng tương tác + LOGIC 100 SAO VÀ GAME PYTHON
  * PHONG CÁCH: Terminal / Sci-Fi
  * ===============================================
  */
 
-// --- KHAI BÁO BIẾN ÂM THANH TOÀN CỤC ---
+// --- KHAI BÁO BIẾN ÂM THANH & LOGIC GAME TOÀN CỤC ---
 let typingSoundCounterTagline = 0;
-const typingSoundIntervalTagline = 4; // Phát âm thanh sau mỗi 4 ký tự cho Tagline
-
+const typingSoundIntervalTagline = 4;
 let typingSoundCounterLog = 0;
-const typingSoundIntervalLog = 3; // Phát âm thanh sau mỗi 3 ký tự cho Terminal Log
+const typingSoundIntervalLog = 3;
+
+// === BIẾN LOGIC GAME PYTHON & STAR COUNTER ===
+let cppChallengesData = [];
+let pythonChallengesData = [];
+let currentCppChallenge = null;
+let currentPythonChallenge = null;
+let starCount = parseInt(localStorage.getItem('starCount')) || 0; // Lấy số sao đã lưu
+let lastResetDate = localStorage.getItem('lastResetDate');
+const maxStars = 100;
+
+// === KHAI BÁO CÁC PHẦN TỬ DOM (sẽ được gán trong window.onload) ===
+let starCountElement = null; // Hiển thị số sao
+
+// C++ Modal Elements
+let cppChallengeModal = null;
+let cppChallengeContainer = null;
+let cppChallengeInput = null;
+let cppResultElement = null;
+let cppNextBtn = null;
+
+// Python Modal Elements
+let pythonChallengeModal = null;
+let pythonChallengeContainer = null;
+let pythonChallengeInput = null;
+let pythonResultElement = null;
+
 
 // ===============================================
 // 1. HÀM TIỆN ÍCH: PHÁT ÂM THANH (SFX)
@@ -28,10 +53,43 @@ function playSFX(audioId) {
 }
 
 // ===============================================
-// 2. HIỆU ỨNG: CHUYỂN ĐỔI CHẾ ĐỘ SÁNG/TỐI (Tích hợp SFX)
+// 2. LOGIC MỚI: HỆ THỐNG STAR COUNTER
 // ===============================================
 
-// Khai báo biến cần thiết
+// --- HÀM 1: CẬP NHẬT GIAO DIỆN SAO ---
+function updateStarDisplay() {
+    if (starCountElement) {
+        starCountElement.textContent = starCount;
+    }
+}
+
+// --- HÀM 2: CỘNG SAO (Được gọi khi trả lời đúng) ---
+function addStar(count = 1) {
+    if (starCount < maxStars) {
+        starCount += count;
+        // Giới hạn không vượt quá 100
+        if (starCount > maxStars) {
+            starCount = maxStars;
+        }
+        localStorage.setItem('starCount', starCount);
+        updateStarDisplay();
+        
+        // Thêm hiệu ứng đặc biệt khi thu thập sao (ví dụ: rung nhẹ)
+        const scoreDisplay = document.querySelector('.score-display');
+        if (scoreDisplay) {
+            scoreDisplay.classList.add('jiggle-active'); // Giả định có class CSS jiggle-active
+            setTimeout(() => {
+                scoreDisplay.classList.remove('jiggle-active');
+            }, 300);
+        }
+    }
+}
+
+
+// ===============================================
+// 3. HIỆU ỨNG: CHUYỂN ĐỔI CHẾ ĐỘ SÁNG/TỐI (Tích hợp SFX)
+// ===============================================
+
 const toggleButton = document.getElementById('mode-toggle');
 const body = document.body;
 
@@ -89,7 +147,7 @@ if (toggleButton) {
 }
 
 // ===============================================
-// 3. HIỆU ỨNG: THANH KỸ NĂNG (SKILL BARS)
+// 4. HIỆU ỨNG: THANH KỸ NĂNG (SKILL BARS)
 // ===============================================
 function animateSkillBars() {
     const skillBars = document.querySelectorAll('.skill-bar');
@@ -120,7 +178,7 @@ function animateSkillBars() {
 }
 
 // ===============================================
-// 4. HIỆU ỨNG: TYPEWRITER CHO TAGLINE
+// 5. HIỆU ỨNG: TYPEWRITER CHO TAGLINE
 // ===============================================
 function typeWriterEffect() {
     const taglineElement = document.getElementById('typewriter-tagline') || document.getElementById('tagline'); // Bổ sung ID 'tagline'
@@ -204,7 +262,7 @@ function typeWriterEffect() {
 }
 
 // ===============================================
-// 5. HIỆU ỨNG: TERMINAL LOG TỰ ĐỘNG LẶP LẠI (SELF-HEALING)
+// 6. HIỆU ỨNG: TERMINAL LOG TỰ ĐỘNG LẶP LẠI (SELF-HEALING)
 // ===============================================
 function typeLogEffect() {
     const logElement = document.getElementById('project-terminal-log');
@@ -232,7 +290,7 @@ function typeLogEffect() {
     // Kết hợp các dòng Log lại để tạo thành chuỗi lặp (GỐC -> SỬA LỖI -> GỐC)
     const fullLogText = [...initialLogLines, ...selfHealLogLines].join('\n');
 
-    logElement.textContent = fullLogText;
+    // logElement.textContent = fullLogText; // Không hiển thị ngay mà chờ typewriter
 
     let isDeleting = false;
     let charIndex = 0;
@@ -294,7 +352,7 @@ function typeLogEffect() {
 }
 
 // ===============================================
-// 6. HIỆU ỨNG: CUSTOM TERMINAL CURSOR
+// 7. HIỆU ỨNG: CUSTOM TERMINAL CURSOR
 // ===============================================
 function customCursorEffect() {
     const cursor = document.getElementById('custom-cursor');
@@ -307,7 +365,7 @@ function customCursorEffect() {
         });
     });
 
-    const interactiveElements = 'a, button, input, .skill-item, .project-log-section, .encrypted-data-block, #mode-toggle'; // Thay .mode-toggle-btn bằng #mode-toggle
+    const interactiveElements = 'a, button, input, .skill-item, .project-log-section, .encrypted-data-block, #mode-toggle, .tab-button';
     const body = document.body;
 
     document.querySelectorAll(interactiveElements).forEach(el => {
@@ -321,16 +379,16 @@ function customCursorEffect() {
 }
 
 // ===============================================
-// 7. HIỆU ỨNG: DATA ANALYZER TABS (ĐÃ BỎ SFX)
+// 8. HIỆU ỨNG: DATA ANALYZER TABS
 // ===============================================
 function dataAnalyzerTabs() {
-    const tabButtons = document.querySelectorAll('.tab-button');
+const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
     const glitchDuration = 50;
 
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // playSFX('audio-confirm'); <--- ĐÃ LOẠI BỎ THEO YÊU CẦU CÔ BÌNH
+            // playSFX('audio-confirm'); <--- Sếp có thể bỏ comment nếu muốn có SFX
 
             const targetTabId = button.dataset.tab;
             const currentActivePane = document.querySelector('.tab-pane.active');
@@ -355,7 +413,7 @@ function dataAnalyzerTabs() {
 }
 
 // ===============================================
-// 8. HIỆU ỨNG: GIÁN ĐOẠN DỮ LIỆU KHI SCROLL
+// 9. HIỆU ỨNG: GIÁN ĐOẠN DỮ LIỆU KHI SCROLL
 // ===============================================
 function dataGlitchOnScrollEffect() {
     const sections = document.querySelectorAll('.section-container');
@@ -388,7 +446,7 @@ function dataGlitchOnScrollEffect() {
     });
 }
 // ===============================================
-// 8. HIỆU ỨNG: PHẢN HỒI TRẠNG THÁI HỆ THỐNG (JIGGLE)
+// 10. HIỆU ỨNG: PHẢN HỒI TRẠNG THÁI HỆ THỐNG (JIGGLE)
 // ===============================================
 function systemFeedbackEffect() {
     const body = document.body;
@@ -398,7 +456,7 @@ function systemFeedbackEffect() {
 
     document.addEventListener('click', (e) => {
         // Kiểm tra xem phần tử được click CÓ PHẢI là phần tử tương tác không.
-        const isInteractive = e.target.closest(interactiveElementsSelector);
+const isInteractive = e.target.closest(interactiveElementsSelector);
 
         // Nếu không phải là phần tử tương tác, hệ thống sẽ "từ chối" lệnh
         if (!isInteractive) {
@@ -416,29 +474,21 @@ function systemFeedbackEffect() {
     });
 }
 // ===============================================
-// 10. HIỆU ỨNG: NGHIÊNG 3D THEO VÙNG (ĐÃ TỐI ƯU CÔ LẬP KHỐI)
+// 11. HIỆU ỨNG: NGHIÊNG 3D THEO VÙNG (TILT EFFECT)
 // ===============================================
 function tiltEffect() {
-    // 1. Chỉ định các phần tử sẽ áp dụng hiệu ứng (Cô có thể tùy chỉnh)
-    // Em chọn một số class phổ biến trên các khối nội dung lớn:
-    const TILT_TARGET_SELECTOR = '.project-log-section';
+    const TILT_TARGET_SELECTOR = '.project-log-section, .skill-item'; // Thêm .skill-item
     const tiltTargets = document.querySelectorAll(TILT_TARGET_SELECTOR);
 
     if (tiltTargets.length === 0) return;
 
-    // Cài đặt mức độ nghiêng (Giữ ở mức vừa phải để đảm bảo chữ không tràn)
-    const maxTilt = 5;     // Giảm xuống 5 độ (từ 8 độ)
-    const perspective = 700; // Giảm độ sâu phối cảnh
+    const maxTilt = 5;
+    const perspective = 700;
 
     tiltTargets.forEach(target => {
-        let frameId = null; // frameId riêng cho từng phần tử
+        let frameId = null;
 
-        // ----------------------------------------------------
-        // HÀM 1: KÍCH HOẠT VÀ TÍNH TOÁN (ĐƯỢC GỌI KHI MOUSEMOVE)
-        // ----------------------------------------------------
         function updateTilt(event) {
-            // Sử dụng event.currentTarget để đảm bảo chúng ta luôn làm việc 
-            // với phần tử mà event listener được gắn (chính là 'target')
             const currentTarget = event.currentTarget;
 
             if (frameId) {
@@ -448,103 +498,96 @@ function tiltEffect() {
             frameId = requestAnimationFrame(() => {
                 const rect = currentTarget.getBoundingClientRect();
 
-                // Tính toán vị trí chuột so với TRUNG TÂM của khối đang di chuột
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
 
                 const mouseX = (event.clientX - centerX) / (rect.width / 2);
                 const mouseY = (event.clientY - centerY) / (rect.height / 2);
 
-                // Tính toán góc nghiêng
                 const rotateY = -mouseX * maxTilt;
                 const rotateX = mouseY * maxTilt;
 
-                // Áp dụng CSS Transform 3D
-                currentTarget.style.transition = 'none'; // Tắt transition trong quá trình di chuyển
-                currentTarget.style.transform = `
-                    perspective(${perspective}px) 
+                currentTarget.style.transition = 'none';
+                currentTarget.style.transform = `perspective(${perspective}px) 
                     rotateX(${rotateX.toFixed(2)}deg) 
                     rotateY(${rotateY.toFixed(2)}deg)
                 `;
             });
         }
 
-        // ----------------------------------------------------
-        // HÀM 2: RESET (khi chuột rời khỏi khối)
-        // ----------------------------------------------------
         function resetTilt() {
             if (frameId) {
                 cancelAnimationFrame(frameId);
                 frameId = null;
             }
 
-            // Kích hoạt transition MƯỢT MÀ để khối quay về vị trí 0,0,0
             target.style.transition = 'transform 0.4s ease-out';
             target.style.transform = 'none';
 
-            // Tắt transition sau khi hoàn thành
             setTimeout(() => {
                 target.style.transition = 'none';
             }, 400);
         }
 
-        // 3. Gắn sự kiện LẮNG NGHE ĐỘC LẬP CHO TỪNG PHẦN TỬ
         target.addEventListener('mousemove', updateTilt);
         target.addEventListener('mouseleave', resetTilt);
 
-        // Thiết lập CSS 3D ban đầu
         target.style.transformStyle = 'preserve-3d';
     });
 }
+
 // ===============================================
-// 11. LOGIC GAME C++: LOAD DỮ LIỆU, HIỂN THỊ & KIỂM TRA
+// 12. LOGIC GAME CHUNG & C++ (HOÀN THIỆN)
 // ===============================================
 
-// Khai báo các biến DOM cần thiết cho game (giả định các ID này sẽ được thêm vào HTML)
-let challengesData = [];
-let currentChallenge = null; // Biến lưu trữ thử thách hiện tại
-// --- CHANGED: Don't query DOM at top-level (elements may not exist yet) ---
-let challengeModal = null;
-let challengeContainer = null;
-let challengeInput = null;
-let resultElement = null;
-
-// --- HÀM 1: LOAD DỮ LIỆU TỪ JSON (Chạy 1 lần khi trang tải) ---
-async function loadChallenges() {
+// --- HÀM TẢI DỮ LIỆU CHUNG ---
+async function fetchChallenges(url, dataArray) {
     try {
-        const response = await fetch('c_plus_plus_challenges.json'); // Thay tên file nếu cần
-        challengesData = await response.json();
-        console.log("C++ Challenges Loaded:", challengesData.length);
-
-        // Gán sự kiện cho Nút Thử Thách Khác (nếu tồn tại)
-        const nextBtn = document.getElementById('next-challenge-btn');
-        if (nextBtn) {
-            // Đảm bảo nút này gọi hàm loadRandomChallenge()
-            nextBtn.addEventListener('click', loadRandomChallenge);
-        }
+const response = await fetch(url);
+        const data = await response.json();
+        // Cập nhật mảng dữ liệu đã truyền vào
+        dataArray.splice(0, dataArray.length, ...data);
+        console.log(`${url} Loaded:`, dataArray.length);
     } catch (error) {
-        console.error("Lỗi: Không thể tải dữ liệu thử thách C++:", error);
-        if (challengeContainer) challengeContainer.textContent = "// LỖI HỆ THỐNG: KHÔNG TẢI ĐƯỢC DỮ LIỆU C++.";
+        console.error(`Lỗi: Không thể tải dữ liệu thử thách từ ${url}:`, error);
     }
 }
-
-// --- HÀM 2: CHỌN VÀ HIỂN THỊ THỬ THÁCH NGẪU NHIÊN ---
-function loadRandomChallenge() {
-    if (challengesData.length === 0) {
+// --- HÀM TẢI (LOAD) NỘI DUNG CHALLENGE CHUNG (ĐÃ FIX LOGIC) ---
+function loadChallenge(
+    challengeList, // Chỉ cần danh sách dữ liệu (cppChallengesData hoặc pythonChallengesData)
+    challengeContainer, 
+    challengeInput, 
+    resultElement,
+    challengeTitleId,
+    challengeNumberId
+) {
+    if (challengeList.length === 0) {
         if (resultElement) resultElement.textContent = 'Hệ thống đang tải dữ liệu...';
         return;
     }
 
     // 1. CHỌN NGẪU NHIÊN VÀ CẬP NHẬT BIẾN TOÀN CỤC
-    const randomIndex = Math.floor(Math.random() * challengesData.length);
-    currentChallenge = challengesData[randomIndex];
+    const randomIndex = Math.floor(Math.random() * challengeList.length);
+    const currentChallengeObject = challengeList[randomIndex];
+    
+    // *** PHẦN QUAN TRỌNG: GÁN KẾT QUẢ VÀO BIẾN TOÀN CỤC CHÍNH XÁC ***
+    if (challengeList === cppChallengesData) {
+        currentCppChallenge = currentChallengeObject;
+    } else if (challengeList === pythonChallengesData) {
+        currentPythonChallenge = currentChallengeObject;
+    }
+    // ***************************************************************
 
     // 2. CẬP NHẬT GIAO DIỆN
     if (challengeContainer) {
-        challengeContainer.textContent = currentChallenge.code_snippet;
+        challengeContainer.textContent = currentChallengeObject.code_snippet;
     }
+    
+    // Cập nhật tiêu đề và số thứ tự (nếu có)
+    const titleElement = document.getElementById(challengeTitleId);
+    if (titleElement) titleElement.textContent = currentChallengeObject.title;
 
-    // 3. RESET FORM & KẾT QUẢ
+    // Reset Form & Kết quả
     if (challengeInput) challengeInput.value = '';
     if (resultElement) {
         // Reset kết quả về trạng thái ban đầu
@@ -555,17 +598,34 @@ function loadRandomChallenge() {
     // Kích hoạt âm thanh tải mới
     playSFX('audio-typing');
 }
+// ===============================================
+// LOGIC C++ CHALLENGE
+// ===============================================
 
-// --- HÀM 3: XỬ LÝ KÍCH HOẠT POP-UP (Gắn vào HTML C++ Skill) ---
+function loadRandomCppChallenge() {
+    // Tái sử dụng hàm chung
+    loadChallenge(
+        cppChallengesData, 
+        cppChallengeContainer, 
+        cppChallengeInput, 
+        cppResultElement, 
+        'cpp-challenge-title', 
+        'cpp-challenge-number'
+    );
+}
+
 function openCppChallenge() {
-    if (challengeModal) {
-        challengeModal.style.display = 'block';
-
-        // Tải thử thách ngẫu nhiên lần đầu tiên mở Pop-up (hoặc nếu chưa có)
-        if (!currentChallenge) {
-            loadRandomChallenge();
-        }
-        // Kích hoạt hiệu ứng Glitch nhẹ khi mở Pop-up
+    if (cppChallengeModal) {
+        cppChallengeModal.style.display = 'block';
+        const loadAttempt = () => {
+            if (cppChallengesData.length > 0) {
+                if (!currentCppChallenge) {
+                    loadRandomCppChallenge();
+                }
+            } else {
+                setTimeout(loadAttempt, 100); // Thử lại sau 100ms
+            }
+        };
         const glitchOverlay = document.querySelector('.glitch-overlay');
         if (glitchOverlay) {
             glitchOverlay.classList.add('active');
@@ -576,43 +636,46 @@ function openCppChallenge() {
     }
 }
 
-// --- HÀM 4: ĐÓNG POP-UP ---
+// *** HÀM closeCppChallenge() ĐÃ ĐƯỢC FIX LẠI BIẾN:
 function closeCppChallenge() {
-    if (challengeModal) {
-        challengeModal.style.display = 'none';
-        // Tùy chọn: Reset lại trạng thái hoặc chỉ đơn giản là ẩn đi
+    if (cppChallengeModal) { // Đã sửa từ 'challengeModal' thành 'cppChallengeModal'
+        cppChallengeModal.style.display = 'none';
     }
 }
 
-// --- HÀM 5: KIỂM TRA ĐÁP ÁN (LOGIC CHỦ YẾU DỰA VÀO JSON) ---
-function checkAnswer() {
-    if (!currentChallenge) {
-        if (resultElement) resultElement.textContent = 'Lỗi: Không tìm thấy thử thách.';
+// *** HÀM checkCppAnswer() ĐÃ ĐƯỢC FIX LẠI BIẾN:
+function checkCppAnswer() {
+    if (!currentCppChallenge || !cppChallengesData.length === 0) {
+        if (cppResultElement) cppResultElement.textContent = 'Hệ thống đang tải dữ liệu C++...';
+        loadRandomCppChallenge();
         return;
     }
 
-    const userAnswer = challengeInput.value.trim();
-    // Chuyển đáp án về dạng chữ thường và loại bỏ khoảng trắng để so sánh linh hoạt
-    const correctAnswer = String(currentChallenge.correct_answer).trim().toLowerCase();
+    const userAnswer = cppChallengeInput.value.trim();
+    const correctAnswer = String(currentCppChallenge.correct_answer).trim().toLowerCase();
     const normalizedUserAnswer = userAnswer.toLowerCase();
 
-    // Phát âm thanh xác nhận trước khi kiểm tra
     playSFX('audio-confirm');
 
     if (normalizedUserAnswer === correctAnswer) {
-        // ĐÚNG
-        resultElement.classList.remove('incorrect');
-        resultElement.classList.add('correct');
-        resultElement.innerHTML = '✅ **CHÍNH XÁC!** Tư duy logic C++ 95% của bạn thật sự đỉnh cao!';
+        // ĐÚNG -> CỘNG SAO VÀ TẢI THỬ THÁCH MỚI
+        addStar(1); 
+        cppResultElement.classList.remove('incorrect');
+        cppResultElement.classList.add('correct');
+        cppResultElement.innerHTML = '✅ CHÍNH XÁC! Bạn đã thu thập được 🌟 1 Sao!';
+        
+        // Tải thử thách mới sau 1.5s
+        setTimeout(loadRandomCppChallenge, 1500);
+
     } else {
         // SAI
-        resultElement.classList.remove('correct');
-        resultElement.classList.add('incorrect');
-        resultElement.innerHTML = `❌ **RẤT TIẾC!** Đáp án đúng là: ${currentChallenge.correct_answer}. <br> Gợi ý: ${currentChallenge.explanation}`;
+        cppResultElement.classList.remove('correct');
+        cppResultElement.classList.add('incorrect');
+cppResultElement.innerHTML = `❌ RẤT TIẾC! Đáp án đúng là: ${currentCppChallenge.correct_answer}. <br> Gợi ý: ${currentCppChallenge.explanation}`;
     }
 
-    // Kích hoạt hiệu ứng rung nhẹ (jiggle) để phản hồi kết quả
-    const modalContent = document.getElementById('cpp-modal-content'); // Giả định ID phần nội dung
+    // Kích hoạt hiệu ứng rung nhẹ (jiggle)
+    const modalContent = document.getElementById('cpp-modal-content'); 
     if (modalContent) {
         modalContent.classList.add('jiggle-active');
         setTimeout(() => {
@@ -621,30 +684,138 @@ function checkAnswer() {
     }
 }
 
+// ===============================================
+// LOGIC PYTHON CHALLENGE 
+// ===============================================
+
+function loadRandomPythonChallenge() {
+    // Tái sử dụng hàm chung
+    loadChallenge(
+        pythonChallengesData, 
+        pythonChallengeContainer, 
+        pythonChallengeInput, 
+        pythonResultElement, 
+        'python-challenge-title', 
+        'python-challenge-number'
+    );
+}
+
+function openPythonChallenge() {
+    if (pythonChallengeModal) {
+        pythonChallengeModal.style.display = 'block';
+        const loadAttempt = () => {
+            if (pythonChallengesData.length > 0) {
+                if (!currentPythonChallenge) {
+                    loadRandomPythonChallenge();
+                }
+            } else {
+                setTimeout(loadAttempt, 100); // Thử lại sau 100ms
+            }
+        };
+        loadAttempt();
+        const glitchOverlay = document.querySelector('.glitch-overlay');
+        if (glitchOverlay) {
+            glitchOverlay.classList.add('active');
+            setTimeout(() => {
+                glitchOverlay.classList.remove('active');
+            }, 300);
+        }
+    }
+}
+
+function closePythonChallenge() {
+    if (pythonChallengeModal) {
+        pythonChallengeModal.style.display = 'none';
+    }
+}
+
+function checkPythonAnswer() {
+    if (!currentPythonChallenge || !pythonChallengeInput) {
+        if (pythonResultElement) pythonResultElement.textContent = 'Lỗi: Không tìm thấy thử thách.';
+        return;
+    }
+
+    const userAnswer = pythonChallengeInput.value.trim();
+    // Đáp án của Python Challenge là code Pythonic, nên so sánh chính xác hơn
+    const correctAnswer = String(currentPythonChallenge.correct_answer).trim();
+
+    playSFX('audio-confirm');
+
+    // So sánh chuỗi code (cần chính xác, không cần lowercase)
+    if (userAnswer === correctAnswer) {
+        // ĐÚNG -> CỘNG SAO VÀ TẢI THỬ THÁCH MỚI
+        addStar(1); 
+        pythonResultElement.classList.remove('incorrect');
+        pythonResultElement.classList.add('correct');
+        pythonResultElement.innerHTML = '✅ PYTHONIC! Code tối ưu. Bạn đã thu thập được 🌟 **1 Sao**!';
+        
+        // Tải thử thách mới sau 1.5s
+        setTimeout(loadRandomPythonChallenge, 1500);
+
+    } else {
+        // SAI
+        pythonResultElement.classList.remove('correct');
+        pythonResultElement.classList.add('incorrect');
+        pythonResultElement.innerHTML = `❌ CHƯA PYTHONIC! Code tối ưu là: <code>${currentPythonChallenge.correct_answer}</code>. <br> Gợi ý: ${currentPythonChallenge.explanation}`;
+    }
+
+    // Kích hoạt hiệu ứng rung nhẹ (jiggle)
+const modalContent = document.getElementById('python-modal-content'); 
+    if (modalContent) {
+        modalContent.classList.add('jiggle-active');
+        setTimeout(() => {
+            modalContent.classList.remove('jiggle-active');
+        }, 300);
+    }
+}
 
 // ===============================================
-// === CẬP NHẬT HÀM KHỞI TẠO CHÍNH (window.onload) ===
+// === HÀM KHỞI TẠO CHÍNH (window.onload) ===
 // ===============================================
 window.onload = function () {
-    // --- NEW: query DOM elements after load so they are found ---
-    challengeModal = document.getElementById('cpp-modal');
-    challengeContainer = document.getElementById('challenge-code');
-    challengeInput = document.getElementById('challenge-answer-input');
-    resultElement = document.getElementById('challenge-result');
+    // 1. GÁN CÁC BIẾN DOM CẦN THIẾT
+    starCountElement = document.getElementById('star-count');
+    
+    // C++
+    cppChallengeModal = document.getElementById('cpp-modal');
+    cppChallengeContainer = document.getElementById('challenge-code');
+    cppChallengeInput = document.getElementById('challenge-answer-input');
+    cppResultElement = document.getElementById('challenge-result');
+    cppNextBtn = document.getElementById('next-challenge-btn'); 
 
-    // 1. Phát Âm thanh Khởi động Hệ thống
+    // Python
+    pythonChallengeModal = document.getElementById('python-modal');
+    pythonChallengeContainer = document.getElementById('python-code-snippet'); 
+    pythonChallengeInput = document.getElementById('python-input'); 
+    pythonResultElement = document.getElementById('python-challenge-result');
+
+    // Gán sự kiện Nút Thử Thách Khác C++
+    if (cppNextBtn) {
+        cppNextBtn.addEventListener('click', loadRandomCppChallenge);
+    }
+
+    // 2. CẬP NHẬT TRẠNG THÁI SAO KHI TẢI XONG
+    const today = new Date().toDateString();
+    if (lastResetDate !== today) {
+        console.warn('DAILY RESET - Đặt lại số sao về 0');
+        starCount = 0;
+        localStorage.setItem('starCount', starCount);
+        localStorage.setItem('lastResetDate', today);
+    }
+    updateStarDisplay();
     playSFX('audio-boot');
 
-    // ** LÔ GIC GAME C++ MỚI (CHẠY NGAY TỪ ĐẦU) **
-    loadChallenges();
+    // 3. TẢI DỮ LIỆU GAME (C++ và Python chạy đồng thời)
+    fetchChallenges('c_plus_plus_challenges.json', cppChallengesData);
+    fetchChallenges('python_challenges.json', pythonChallengesData);
 
-    // 2. Kích hoạt các hiệu ứng tương tác
+    // 4. Kích hoạt tất cả các hiệu ứng tương tác (ĐÃ KHÔI PHỤC VÀ BỎ COMMENT)
     animateSkillBars();
     typeWriterEffect();
     typeLogEffect();
-    customCursorEffect();
-    dataAnalyzerTabs();
-    dataGlitchOnScrollEffect();
-    systemFeedbackEffect();
-    tiltEffect();
+    customCursorEffect(); // ĐÃ KHÔI PHỤC
+    dataAnalyzerTabs(); // ĐÃ KHÔI PHỤC
+    dataGlitchOnScrollEffect(); // ĐÃ KHÔI PHỤC
+    systemFeedbackEffect(); // ĐÃ KHÔI PHỤC
+    tiltEffect(); // ĐÃ KHÔI PHỤC
 };

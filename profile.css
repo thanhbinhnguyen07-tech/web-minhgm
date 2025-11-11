@@ -749,7 +749,38 @@ body.dark-mode .tagline {
         border: 1px solid #444;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
+/* ====================================
+   MỤC BỔ SUNG: HIỂN THỊ SỐ SAO (SCORE DISPLAY)
+   ==================================== */
+.score-display {
+    position: fixed; 
+    top: 65px; /* Đặt dưới nút mode-toggle (20px + 40px height + 5px margin) */
+    right: 20px;
+    z-index: 1001; /* Đảm bảo nằm trên nút mode-toggle (z-index 1000) */
+    
+    /* Phong cách Terminal Neon */
+    padding: 8px 15px;
+    border-radius: 6px; 
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace; /* Dùng font Terminal */
+    text-transform: uppercase;
+    transition: all 0.3s ease; 
 
+    /* LIGHT MODE */
+    background-color: #ecf0f1; /* Nền xám nhạt */
+    color: #2ecc71; /* Chữ Xanh Lá Neon */
+    border: 1px solid #2ecc71; 
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.7), 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* DARK MODE */
+body.dark-mode .score-display {
+    background-color: #1a1a1a; /* Nền tối đậm */
+    color: #3498db; /* Chữ Xanh Dương Neon */
+    border: 1px solid #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.7), 0 2px 5px rgba(0, 0, 0, 0.4);
+}
         body.dark-mode ul li:hover {
             background-color: rgba(46, 204, 113, 0.1);
             border-color: #2ecc71;
@@ -798,7 +829,21 @@ body.dark-mode .mode-toggle-btn {
         background-color: #bdc3c7;
     }
 
-
+.score-display {
+    position: fixed; /* Giữ nó ở cùng một vị trí với nút */
+    top: 65px; /* Đặt dưới nút (ví dụ: 20px + chiều cao nút 40px + khoảng cách 5px) */
+    right: 20px;
+    z-index: 99; /* Luôn hiển thị trên các nội dung khác */
+    
+    /* Phong cách Terminal */
+    padding: 8px 15px;
+    border: 1px solid var(--accent-color); 
+    background-color: var(--header-bg-color); 
+    color: var(--accent-color);
+    font-size: 1.1em;
+    font-weight: 700;
+    box-shadow: 0 0 5px var(--accent-color); 
+}
 /* Lớp phủ màn hình "Glitch" */
 .glitch-overlay {
     position: fixed;
@@ -1179,4 +1224,150 @@ body.dark-mode .modal-content {
 /* Hiệu ứng Rung lắc (Jiggle) khi check đáp án */
 .modal-content.jiggle-active {
     animation: jiggle 0.15s ease-out;
+}
+/* =====================================
+   CODE FIX LỖI DÍNH KHUNG (Padding)
+   Để thêm vào file style.css
+   ===================================== */
+
+/* Container chứa cả header và code snippet */
+.code-area-container {
+    border: 1px solid var(--accent-color); 
+    border-radius: 5px; 
+    overflow: hidden; 
+    margin-bottom: 20px; /* Thêm khoảng cách với khu vực input */
+    background-color: var(--code-bg-color); 
+}
+
+/* Phần hiển thị code (PRE) */
+.code-area-container pre {
+    /* *** CHỖ CẦN SỬA/THÊM: Tăng Padding (Lề trong) *** */
+    padding: 15px; /* Sếp có thể chỉnh giá trị này (ví dụ: 10px, 20px) */
+    
+    /* Đảm bảo không có margin bị thừa */
+    margin: 0; 
+    
+    white-space: pre-wrap; /* Giúp code xuống dòng theo nội dung */
+    word-wrap: break-word; 
+    
+    /* Cấu hình phông chữ code */
+    font-family: 'Consolas', 'Courier New', monospace; 
+    font-size: 0.9em;
+    line-height: 1.4;
+    color: var(--code-text-color);
+}
+/* =====================================
+   NÂNG CẤP UI CHO Ô NHẬP CODE (INPUT FIELD)
+   Áp dụng cho cả C++ và Python
+   ===================================== */
+
+.interaction-area .input-group input[type="text"] {
+    /* *** BACKGROUND & VIỀN (Màu tối và đường viền neon) *** */
+    background-color: var(--input-bg-color, #2d303d); /* Màu nền input */
+    border: 1px solid var(--accent-color); /* Viền màu neon */
+    border-radius: 4px; /* Bo góc nhẹ */
+
+    /* *** CHỮ (Màu neon, phông code) *** */
+    color: var(--text-color-light, #e0e0e0); /* Màu chữ neon */
+    font-family: 'Consolas', 'Courier New', monospace; /* Phông chữ code */
+    font-size: 1em;
+    padding: 10px 15px; /* Khoảng đệm bên trong */
+    width: calc(100% - 150px); /* Điều chỉnh độ rộng để vừa với nút */
+    box-sizing: border-box; /* Đảm bảo padding và border không làm tăng width */
+    
+    /* *** HIỆU ỨNG FOCUS (Khi click vào) *** */
+    outline: none; /* Bỏ viền outline mặc định */
+    box-shadow: 0 0 8px var(--accent-color-light, rgba(52, 152, 219, 0.5)); /* Hiệu ứng tỏa sáng */
+    transition: all 0.2s ease-in-out; /* Hiệu ứng chuyển động mượt mà */
+}
+
+.interaction-area .input-group input[type="text"]::placeholder {
+    color: var(--text-color-faded, #888); /* Màu placeholder */
+    opacity: 0.7; /* Làm mờ placeholder */
+}
+
+/* HIỆU ỨNG HOVER & FOCUS (Làm sáng viền khi di chuột hoặc focus) */
+.interaction-area .input-group input[type="text"]:hover {
+    border-color: var(--accent-color-light, #3498db);
+}
+
+.interaction-area .input-group input[type="text"]:focus {
+    border-color: var(--accent-color-light, #3498db);
+    box-shadow: 0 0 12px var(--accent-color-light, rgba(52, 152, 219, 0.8));
+}
+
+/* Thêm cho nút "Chạy Code" để nó đẹp hơn và nằm cạnh input */
+.interaction-area .input-group {
+    display: flex; /* Sử dụng flexbox để xếp input và button cạnh nhau */
+    gap: 10px; /* Khoảng cách giữa input và button */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 15px; /* Khoảng cách với kết quả bên dưới */
+}
+
+/* Đảm bảo nút "Chạy Code" cũng có style đẹp */
+.interaction-area .input-group .action-btn.run-btn {
+    flex-shrink: 0; /* Ngăn nút bị co lại */
+    padding: 10px 20px;
+    font-size: 1em;
+    /* Có thể thêm các thuộc tính khác cho nút nếu cần */
+}
+/* =======================================
+   ANIMATIONS
+   ======================================= */
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Đảm bảo đường quét chạy từ trên xuống 100% chiều cao của content */
+@keyframes scan-line {
+    0% {
+        top: 0;
+    }
+    100% {
+        /* Chạy hết chiều dài của body */
+        top: 220%; 
+    }
+}
+
+@keyframes incorrect-glitch {
+    0% { transform: translate(0, 0); }
+    15% { transform: translate(-2px, 2px); }
+    30% { transform: translate(2px, -2px); }
+    45% { transform: translate(-2px, 2px); }
+    60% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, 2px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* =======================================
+   SCANNING LINE STYLES (body::before)
+   ======================================= */
+body::before {
+    content: '';
+    position: absolute; 
+    left: 0;
+    width: 100%;
+    height: 2px; /* Độ dày của đường kẻ */
+    
+    /* *** FIX LỖI: Z-INDEX CAO HƠN ĐỂ KHÔNG BỊ NỘI DUNG CHE *** */
+    z-index: 99; /* Đảm bảo nó luôn nằm trên nội dung chính */
+    
+    /* Animation (Chỉ cần định nghĩa một lần ở đây) */
+    animation: scan-line 13s linear infinite;
+}
+
+/* --- DARK MODE (Mặc định hoặc body.dark-mode) --- */
+/* Cần định nghĩa màu nền ban đầu cho body::before */
+body::before {
+    background: rgba(0, 255, 136, 1.0); /* Xanh lá Neon Đặc */
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4); /* Glow Xanh lá */
+}
+
+/* --- LIGHT MODE (Ghi đè màu) --- */
+body.light-mode::before {
+    /* *** FIX LỖI: Chỉ cần đổi màu/shadow, không cần lặp lại animation *** */
+    background: rgba(0, 64, 128, 1.0); /* Xanh Dương Đậm Đặc */
+    box-shadow: 0 0 10px rgba(77, 148, 255, 0.3); /* Glow Xanh Dương */
 }
