@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHÀO MỪNG ĐẾN VỚI LÃNH ĐỊA CẤP CAO CỦA MINH GM</title>
-    <link rel="stylesheet" href="welcome.css">
+    <title>System Authentication Required</title>
+    <link rel="stylesheet" href="check.css">
     <script>
         // BƯỚC 1: BIẾN PHIÊN BẢN (VERSION)
-        const CACHE_VERSION = "0.0.4"; 
+        const CACHE_VERSION = "0.1.0"; 
 
         // BƯỚC 2: HÀM PHÁ CACHE
         function applyCacheBusting() {
@@ -26,28 +26,35 @@
         window.onload = applyCacheBusting;
     </script>
 </head>
-<body>
-    <div id="welcome-screen" class="screen">
-        <h1 id="welcome-title">CHÀO MỪNG ĐẾN VỚI LÃNH ĐỊA CẤP CAO CỦA MINH GM</h1>
-        <h1 id="welcome-title">INITIAIZING SECURITY PROTOCOL...</h1>
-        <p id="slogan-display"></p>
-        <span class="blinking-cursor">|</span>
+<body class="dark-mode">
+    <canvas id="matrixCanvas"></canvas>
+    <div class="terminal-container">
+        <div id="ai-greeting" class="ai-greeting"></div>
+        
+        <div id="auth-form" class="auth-form" style="display:none;">
+            <p>ACCESS PROTOCOL: IDENTITY VERIFICATION</p>
+            
+            <div class="input-line">
+                <span class="prompt">> Full Name: </span>
+                <input type="text" id="input-name" placeholder="Nguyễn Văn A" autocomplete="off">
+            </div>
+            
+            <div class="input-line">
+                <span class="prompt">> Date of Birth (DD/MM/YYYY): </span>
+                <input type="text" id="input-dob" placeholder="01/01/2011" autocomplete="off">
+            </div>
+
+            <div class="input-line">
+                <span class="prompt">> Class: </span>
+                <input type="text" id="input-class" placeholder="9.6" autocomplete="off">
+            </div>
+
+            <button onclick="verifyAccess()">[ AUTHENTICATE ]</button>
+        </div>
+        <br></br>
+        <div id="system-status" class="system-status"></div>
     </div>
-    <div class="fake-buttons-container">
-        <button class="fake-button">Bấm vào đây để tiếp tục</button>
-        <button class="fake-button">Bấm vào đây để tiếp tục</button>
-        <button class="fake-button">Bấm vào đây để tiếp tục</button>
-    </div>
-    <button id="hidden-button"></button>
-    <div class="glitch-lines">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <script src="welcome.js"></script>
+    <audio id="audio-denied" src="sfx_denied.mp3" preload="auto"></audio>
+    <script src="check.js"></script>
 </body>
 </html>
