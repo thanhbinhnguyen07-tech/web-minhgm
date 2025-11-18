@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="check.css">
     <script>
         // BƯỚC 1: BIẾN PHIÊN BẢN (VERSION)
-        const CACHE_VERSION = "0.1.0"; 
+        const CACHE_VERSION = "0.1.1"; 
 
         // BƯỚC 2: HÀM PHÁ CACHE
         function applyCacheBusting() {
@@ -36,19 +36,24 @@
             
             <div class="input-line">
                 <span class="prompt">> Full Name: </span>
-                <input type="text" id="input-name" placeholder="Nguyễn Văn A" autocomplete="off">
+                <input type="text" id="input-name" placeholder="Nguyễn Văn A" autocomplete="off" oninput="checkNameForToken()">
             </div>
             
-            <div class="input-line">
-                <span class="prompt">> Date of Birth (DD/MM/YYYY): </span>
-                <input type="text" id="input-dob" placeholder="01/01/2011" autocomplete="off">
-            </div>
+            <div id="conditional-fields">
+                <div class="input-line">
+                    <span class="prompt">> Date of Birth (DD/MM/YYYY): </span>
+                    <input type="text" id="input-dob" placeholder="01/01/2011" autocomplete="off">
+                </div>
 
-            <div class="input-line">
-                <span class="prompt">> Class: </span>
-                <input type="text" id="input-class" placeholder="9.6" autocomplete="off">
+                <div class="input-line">
+                    <span class="prompt">> Class: </span>
+                    <input type="text" id="input-class" placeholder="9.6" autocomplete="off">
+                </div>
             </div>
-
+            <div class="input-line" id="token-input-line" style="display: none;">
+                <span class="prompt">> Token: </span>
+                <input type="password" id="input-token" placeholder="Nhập token..." autocomplete="off">
+            </div>
             <button onclick="verifyAccess()">[ AUTHENTICATE ]</button>
         </div>
         <br></br>

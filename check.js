@@ -1,34 +1,63 @@
+// === HÀM SHA-256 CHO VIỆC MÃ HÓA TOKEN (DÁN VÀO ĐẦU check.js) ===
+async function sha256(message) {
+    // Chuyển chuỗi thành mảng byte
+    const msgBuffer = new TextEncoder().encode(message);
+
+    // Mã hóa bằng Web Cryptography API
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+    // Chuyển mảng byte hash sang chuỗi hex (64 ký tự)
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}
+// =================================================================
 // === CODE ĐÃ FIX CỨNG ID LẦN CUỐI VÀ API ===
+// === CODE ĐÃ FIX CỨNG ID LẦN CUỐI VÀ API & THÊM LOGIC ĐẾM LƯỢT TRUY CẬP ===
 function trackUserAccess(user) {
-    // [LOG CẨN THẬN]
     console.log("Attempting to track user:", user.name, "at", new Date().toLocaleString()); 
 
     // 1. Link API Chính Xác:
     const TRACKING_API_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeBw_CQme2SDFOUJ9cEbdoLZ0H83mTB3AsWPWDct2Ld6aYvYQ/formResponse';
     
+    // --- BỔ SUNG LOGIC ĐẾM SỐ LẦN TRUY CẬP ---
+    const userKey = normalizeString(user.name); // Tạo key từ tên chuẩn hóa (ví dụ: TRUONG TUAN MINH)
+    
+    // 1.1. Đọc số lần truy cập cũ
+    let accessCount = parseInt(localStorage.getItem(`accessCount_${userKey}`) || 0); 
+    
+    // 1.2. Tăng số lần truy cập lên 1
+    accessCount++;
+    
+    // 1.3. Lưu lại số lần truy cập mới vào LocalStorage
+    localStorage.setItem(`accessCount_${userKey}`, accessCount);
+    // -------------------------------------------------------------
+
     // 2. Chuẩn bị dữ liệu (FormData)
     const formData = new FormData();
     
     // 3. ENTRY IDs CHÍNH XÁC TỪ PAYLOAD CỦA SẾP
-    const Q1_NAME = 'entry.1648617329'; // Tên
-    const Q2_DOB = 'entry.694182112';   // Ngày sinh (Day of birth)
-    const Q3_CLASS = 'entry.548262119';  // Lớp
-    const Q4_TIME = 'entry.1527842383';  // Thời gian
+    const Q1_NAME = 'entry.1648617329'; 
+    const Q2_DOB = 'entry.694182112';   
+    const Q3_CLASS = 'entry.548262119';  
+    const Q4_TIME = 'entry.1527842383';  
+    // ENTRY ID MỚI (GIẢ ĐỊNH) DÀNH CHO SỐ LẦN TRUY CẬP
+    const Q5_ACCESS_COUNT = 'entry.327321207'; // <-- CẦN SỬA Ở BƯỚC 2 DƯỚI ĐÂY!
     
     // 4. Gửi dữ liệu đi
     formData.append(Q1_NAME, user.name);
     formData.append(Q2_DOB, user.dob);
     formData.append(Q3_CLASS, user.class);
     formData.append(Q4_TIME, new Date().toLocaleString('vi-VN')); 
-
+    formData.append(Q5_ACCESS_COUNT, accessCount); // <-- Gửi số lần truy cập
+    
     fetch(TRACKING_API_URL, {
         method: 'POST',
         mode: 'no-cors', 
         body: formData 
     })
     .then(response => {
-        // Hoàn thành: Dữ liệu đã được gửi bí mật
-        console.log('Tracking request sent. Check Google Sheet for update.');
+        console.log(`Tracking request sent. ${user.name} access count: ${accessCount}`);
     })
     .catch(error => {
         console.error('Tracking Error:', error);
@@ -52,7 +81,7 @@ function playSFX(audioId) {
 }
 const VALID_USERS = [
     // Thông tin của Sếp Minh (Người dùng VIP)
-    { name: "TRƯƠNG TUẤN MINH", dob: "28/12/2011", class: "9.1", greeting: "Chào mừng, SẾP MINH! Hệ thống Terminal đã xác thực danh tính VIP. Toàn quyền truy cập." },
+    { name: "TRƯƠNG TUẤN MINH", dob: "28/12/2011", class: "9.1", token: "18c99859f518a445b404d538e9a611186e814d48107c220f83d98d28e46955a8", greeting: "Chào mừng, SẾP MINH! Hệ thống Terminal đã xác thực danh tính VIP. Toàn quyền truy cập." },
     
     // Thêm các bạn khác từ danh sách Sếp đã gửi (Phải nhập chữ IN HOA không dấu để đơn giản hóa logic kiểm tra)
     { name: "VÕ TRƯỜNG AN", dob: "07/11/2011", class: "9.1", greeting: "Xin chào Võ Trường An! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
@@ -180,53 +209,93 @@ function normalizeString(str) {
     return str;
 }
 
-
-function verifyAccess() {
+// Chuyển hàm thành async function
+// =================================================================
+// === HÀM XÁC THỰC MỚI (ĐÃ FIX LỖI VIP) ===
+// =================================================================
+async function verifyAccess() { 
     const name = normalizeString(document.getElementById('input-name').value);
     const dob = document.getElementById('input-dob').value.trim();
     const classInput = document.getElementById('input-class').value.trim();
-    const statusElement = document.getElementById('system-status');
-    statusElement.innerHTML = ''; // Xóa thông báo cũ
+    const tokenInput = document.getElementById('input-token').value.trim(); 
     
-    // Kiểm tra các trường có bị trống không
-    if (!name || !dob || !classInput) {
-        statusElement.innerHTML = '<span style="color:#ff0000;">[ERROR] System Integrity Check FAILED. All fields are REQUIRED.</span>';
+    const statusElement = document.getElementById('system-status');
+    statusElement.innerHTML = ''; 
+    
+    // 1. Kiểm tra trường trống chung
+    if (!name || (!tokenInput && (!dob || !classInput))) {
+        statusElement.innerHTML = '<span style="color:#ff0000;">[ERROR] System Integrity Check FAILED. All required fields must be filled.</span>';
         return;
     }
-    
-    const foundUser = VALID_USERS.find(user => {
-        // Kiểm tra 3 điều kiện: Tên (normalize), Ngày sinh (chuẩn), Lớp (chuẩn)
-        return normalizeString(user.name) === name && 
-               user.dob === dob && 
-               user.class === classInput;
-    });
 
-    if (foundUser) {
-        // ===================================
-        // *** THÀNH CÔNG: CHUYỂN HƯỚNG ***
-        // ===================================
+    let foundUser = null;
+    const VIP_NAME_NORMALIZED = "TRUONG TUAN MINH";
+
+    // 2. LOGIC XÁC THỰC SẾP MINH (CHỈ CẦN TÊN VÀ TOKEN)
+    if (name === VIP_NAME_NORMALIZED && tokenInput) {
+        const userVIP = VALID_USERS.find(user => normalizeString(user.name) === VIP_NAME_NORMALIZED);
         
-        // 1. Hiển thị thông báo thành công cá nhân hóa
+        if (userVIP) {
+            const hashedTokenInput = await sha256(tokenInput); 
+            
+            if (hashedTokenInput === userVIP.token) { 
+                foundUser = userVIP; // Xác thực Token thành công
+            } else {
+                // Token SAI
+                playSFX('audio-denied');
+                 statusElement.innerHTML = `<span style="color:#ff0000;">[SECURITY ALERT] IDENTITY CONFLICT. </span><br><span style="color:#ff00ff;">Invalid Token. DENIED.</span><br>Logging attempted entry...`;
+                 return;
+            }
+        }
+    }
+    
+    // 3. LOGIC XÁC THỰC NGƯỜI DÙNG THƯỜNG (CẦN TÊN + DOB + CLASS)
+    if (!foundUser) { // Nếu chưa tìm thấy Sếp Minh, mới chạy tìm kiếm người dùng thường
+        foundUser = VALID_USERS.find(user => {
+            return normalizeString(user.name) === name && 
+                   user.dob === dob && 
+                   user.class === classInput;
+        });
+    }
+
+    // 4. XỬ LÝ KẾT QUẢ CUỐI CÙNG
+    if (foundUser) {
+        // LOGIC THÀNH CÔNG
         statusElement.innerHTML = `<span style="color:#00ff00;">[SUCCESS] Identity Confirmed. ${foundUser.greeting}</span><br>System Redirecting to Main Console in 3 seconds...`;
         
-        // 2. Lưu tên người dùng vào localStorage để Profile chính có thể dùng
         localStorage.setItem('username', foundUser.name);
-        trackUserAccess(foundUser); // Gọi hàm tracking
-        // 3. Chuyển hướng đến Profile chính (ĐÃ ĐỔI TÊN)
+        trackUserAccess(foundUser); 
+        
         setTimeout(() => {
             window.location.href = 'welcome.html'; 
-            // HOẶC dùng 'welcome.html' nếu Sếp đặt tên file là vậy.
-        }, 3000); // Chờ 3 giây
+        }, 3000);
         
-        // *** TO-DO: Gửi POST request lên Google Sheet/Firebase để tracking lượt truy cập tại đây ***
 
     } else {
-        // ===================================
-        // *** THẤT BẠI: LỖI BẢO MẬT ***
-        // ===================================
+        // LOGIC THẤT BẠI
         playSFX('audio-denied');
         statusElement.innerHTML = `<span style="color:#ff0000;">[WARNING] ACCESS DENIED. </span><br><span style="color:#ff00ff;">Unauthorized Personnel Detected. System Firewall Initialized.</span><br>Logging attempted entry...`;
-        
+    }
+}
+// =================================================================
+
+function checkNameForToken() {
+    const nameInput = document.getElementById('input-name');
+    const tokenLine = document.getElementById('token-input-line');
+    const conditionalFields = document.getElementById('conditional-fields');
+    const normalizedName = normalizeString(nameInput.value);
+
+    // Tên chuẩn hóa của Sếp Minh
+    const VIP_NAME = "TRUONG TUAN MINH"; 
+
+    if (normalizedName === VIP_NAME) {
+        // Nếu là Sếp Minh:
+        tokenLine.style.display = 'flex'; // Hiển thị trường Token
+        conditionalFields.style.display = 'none'; // Ẩn trường DOB và Class
+    } else {
+        // Nếu không phải Sếp Minh:
+        tokenLine.style.display = 'none'; // Ẩn trường Token
+        conditionalFields.style.display = 'block'; // Hiện trường DOB và Class (đã gói gọn)
     }
 }
 // Bắt đầu hiệu ứng Typewriter khi trang được tải
