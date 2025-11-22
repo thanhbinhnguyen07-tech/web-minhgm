@@ -9,6 +9,7 @@ async function sha256(message) {
     // Chuyển mảng byte hash sang chuỗi hex (64 ký tự)
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    console.log("SHA-256 Hash Generated:", hashHex);
     return hashHex;
 }
 // =================================================================
@@ -81,12 +82,12 @@ function playSFX(audioId) {
 }
 const VALID_USERS = [
     // Thông tin của Sếp Minh (Người dùng VIP)
-    { name: "TRƯƠNG TUẤN MINH", dob: "28/12/2011", class: "9.1", token: "18c99859f518a445b404d538e9a611186e814d48107c220f83d98d28e46955a8", greeting: "Chào mừng, SẾP MINH! Hệ thống Terminal đã xác thực danh tính VIP. Toàn quyền truy cập." },
-    
+    { name: "TRƯƠNG TUẤN MINH", dob: "28/12/2011", class: "9.1", token: "e395f94d9b4646f88c699a39355f24df741530b3eb9f8b810add591acb50e9cf", greeting: "Chào mừng, SẾP MINH! Hệ thống Terminal đã xác thực danh tính VIP. Toàn quyền truy cập." },
+    { name: "NGUYỄN VĂN NHẬT HUY", dob: "23/04/2011", class: "9.5", greeting: "Xin chào Nguyễn Văn Nhật Huy! Đã xác thực thành viên Lớp 9.5 - Bạn của MinhGM. Truy cập đã được cấp phép." },
     // Thêm các bạn khác từ danh sách Sếp đã gửi (Phải nhập chữ IN HOA không dấu để đơn giản hóa logic kiểm tra)
     { name: "VÕ TRƯỜNG AN", dob: "07/11/2011", class: "9.1", greeting: "Xin chào Võ Trường An! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "NGÔ QUỐC ANH", dob: "13/07/2010", class: "9.1", greeting: "Xin chào Ngô Quốc Anh! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
-    { name: "NGUYỄN THÀNH BẠCH", dob: "27/09/2011", class: "9.1", greeting: "Xin chào Nguyễn Thành Bạch! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
+    { name: "NGUYỄN THANH BẠCH", dob: "27/09/2011", class: "9.1", greeting: "Xin chào Nguyễn Thanh Bạch! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "ÔNG VĂN GIA BẢO", dob: "16/04/2011", class: "9.1", greeting: "Xin chào Ông Văn Gia Bảo! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "TẤN PHẠM THANH CẢNH", dob: "25/06/2011", class: "9.1", greeting: "Xin chào Tấn Phạm Thanh Cảnh! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "TRẦN VIẾT CHÂU", dob: "03/09/2011", class: "9.1", greeting: "Xin chào Trần Viết Châu! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
@@ -115,7 +116,7 @@ const VALID_USERS = [
     { name: "CAO TRẦN BẢO NHI", dob: "18/10/2011", class: "9.1", greeting: "Xin chào Cao Trần Bảo Nhi! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "NGUYỄN NGỌC BẢO NHƯ", dob: "01/01/2011", class: "9.1", greeting: "Xin chào Nguyễn Ngọc Bảo Như! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "NGÔ VĂN PHÁT", dob: "18/07/2011", class: "9.1", greeting: "Xin chào Ngô Văn Phát! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
-    { name: "LƯƠNG KHẮC PHÚC", dob: "23/05/2011", class: "9.1", greeting: "Xin chào Lương Khắc Phúc! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
+    { name: "LƯỜNG KHẮC PHÚC", dob: "23/05/2011", class: "9.1", greeting: "Xin chào Lường Khắc Phúc! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "NGUYỄN VĂN THÀNH", dob: "24/12/2011", class: "9.1", greeting: "Xin chào Nguyễn Văn Thành! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "TRẦN THỊ THANH THẢO", dob: "06/01/2011", class: "9.1", greeting: "Xin chào Trần Thị Thanh Thảo! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
     { name: "PHAN NGỌC ANH THƯ", dob: "19/06/2011", class: "9.1", greeting: "Xin chào Phan Ngọc Anh Thư! Đã xác thực thành viên Lớp 9.1. Truy cập đã được cấp phép." },
@@ -132,7 +133,7 @@ const VALID_USERS = [
 let lineIndex = 0;
 let charIndex = 0;
 let messageLines = [
-    "MinhGM >> System Initializing... OS v0.1.0",
+    "MinhGM >> System Initializing... OS v0.1.2",
     "MinhGM >> Connecting to Decentralized Authentication Server...",
     "MinhGM >> Status: ONLINE. Access Protocol Activated.",
     "MinhGM >> System Firewall: Green.",
@@ -243,8 +244,11 @@ async function verifyAccess() {
             } else {
                 // Token SAI
                 playSFX('audio-denied');
-                 statusElement.innerHTML = `<span style="color:#ff0000;">[SECURITY ALERT] IDENTITY CONFLICT. </span><br><span style="color:#ff00ff;">Invalid Token. DENIED.</span><br>Logging attempted entry...`;
-                 return;
+                statusElement.innerHTML = `<span style="color:#ff0000;">[SECURITY ALERT] IDENTITY CONFLICT. </span><br><span style="color:#ff00ff;">Invalid Token. DENIED.</span><br>Logging attempted entry...`;
+                console.warn('Invalid VIP token — redirecting to lock0.html');
+                    // dùng replace để không lưu trang trước vào lịch sử
+                setTimeout(() => { window.location.replace("lock0.html"); }, 3000);
+                return;
             }
         }
     }
@@ -275,6 +279,9 @@ async function verifyAccess() {
         // LOGIC THẤT BẠI
         playSFX('audio-denied');
         statusElement.innerHTML = `<span style="color:#ff0000;">[WARNING] ACCESS DENIED. </span><br><span style="color:#ff00ff;">Unauthorized Personnel Detected. System Firewall Initialized.</span><br>Logging attempted entry...`;
+        setTimeout(() => {
+            window.location.href = 'lock0.html'; 
+        }, 3000);
     }
 }
 // =================================================================
@@ -298,9 +305,28 @@ function checkNameForToken() {
         conditionalFields.style.display = 'block'; // Hiện trường DOB và Class (đã gói gọn)
     }
 }
+function startBackgroundMusic() {
+    const music = document.getElementById('background-music');
+    
+    // Kiểm tra xem phần tử audio có tồn tại và đang bị tạm dừng (paused) hay không
+    if (music && music.paused) {
+        music.play().then(() => {
+            console.log('✅ Nhạc nền đã được kích hoạt thành công!');
+            
+            // QUAN TRỌNG: Gỡ bỏ Listener sau khi nhạc đã phát, tránh gọi lại nhiều lần
+            document.removeEventListener('click', startBackgroundMusic);
+            document.removeEventListener('keydown', startBackgroundMusic);
+            
+        }).catch(error => {
+            // Nếu vẫn có lỗi (ví dụ: người dùng chưa cho phép âm thanh), ghi log
+            console.warn("⚠️ Trình duyệt vẫn chặn Autoplay. Cần thêm tương tác khác.");
+        });
+    }
+}
 // Bắt đầu hiệu ứng Typewriter khi trang được tải
 window.onload = function() {
     typeWriter();
+    startBackgroundMusic();
     resizeCanvas();
     setInterval(drawMatrix, 35);
 };

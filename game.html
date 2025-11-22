@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="game.css">
     <script>
         // BƯỚC 1: BIẾN PHIÊN BẢN (VERSION)
-        const CACHE_VERSION = "0.1.1"; 
+        const CACHE_VERSION = "0.1.2"; 
 
         // BƯỚC 2: HÀM PHÁ CACHE
         function applyCacheBusting() {
@@ -42,6 +42,9 @@
         <h2 id="overlay-text"></h2>
         <button id="overlay-button" class="hidden">Chơi Lại</button>
     </div>
+    <audio id="background-music" loop autoplay>
+        <source src="Summer-Express-Japandee-x-Thereon-Remix.mp3" preload="auto">
+    </audio>
     <script src="game.js"></script>
 </body>
 </html>

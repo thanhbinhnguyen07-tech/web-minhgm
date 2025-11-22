@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truy Cập Bị Từ Chối</title>
+    <link rel="stylesheet" href="lock0.css">
+    <script>
+        // BƯỚC 1: BIẾN PHIÊN BẢN (VERSION)
+        const CACHE_VERSION = "0.1.2"; 
+
+        // BƯỚC 2: HÀM PHÁ CACHE
+        function applyCacheBusting() {
+            // Phá Cache cho CSS
+            document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                link.href = link.href.split('?')[0] + '?v=' + CACHE_VERSION;
+            });
+
+            // Phá Cache cho JS
+            document.querySelectorAll('script[src]').forEach(script => {
+                script.src = script.src.split('?')[0] + '?v=' + CACHE_VERSION;
+            });
+        }
+
+        // Chạy hàm ngay khi trang tải xong
+        window.onload = applyCacheBusting;
+    </script>
+</head>
+<body>
+    <div class="screen lock-container">
+        <h1>[ACCESS DENIED]</h1>
+        <p>You have been denied access to this system.</p>
+        <button id="return-button">QUAY LẠI</button>
+    </div>
+
+    <script src="lock0.js"></script>
+    <audio id="audio-denied" src="sfx_denied.mp3" preload="auto"></audio>
+</body>

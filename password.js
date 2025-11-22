@@ -138,6 +138,34 @@ function checkPassword() {
         }
     }
 }
+// BẮT ĐẦU: CODE KÍCH HOẠT NHẠC NỀN SAU TƯƠNG TÁC
+/**
+ * Hàm kích hoạt nhạc nền sau khi người dùng tương tác (click/gõ phím).
+ * Điều này giúp vượt qua hạn chế Autoplay của các trình duyệt hiện đại.
+ */
+function startBackgroundMusic() {
+    const music = document.getElementById('background-music');
+    
+    // Kiểm tra xem phần tử audio có tồn tại và đang bị tạm dừng (paused) hay không
+    if (music && music.paused) {
+        music.play().then(() => {
+            console.log('✅ Nhạc nền đã được kích hoạt thành công!');
+            
+            // QUAN TRỌNG: Gỡ bỏ Listener sau khi nhạc đã phát, tránh gọi lại nhiều lần
+            document.removeEventListener('click', startBackgroundMusic);
+            document.removeEventListener('keydown', startBackgroundMusic);
+            
+        }).catch(error => {
+            // Nếu vẫn có lỗi (ví dụ: người dùng chưa cho phép âm thanh), ghi log
+            console.warn("⚠️ Trình duyệt vẫn chặn Autoplay. Cần thêm tương tác khác.");
+        });
+    }
+}
 
+// 📌 GÁN LẮNG NGHE SỰ KIỆN: Bất kỳ cú click hoặc gõ phím nào sẽ kích hoạt nhạc
+document.addEventListener('click', startBackgroundMusic);
+document.addEventListener('keydown', startBackgroundMusic);
+
+// KẾT THÚC: CODE KÍCH HOẠT NHẠC NỀN SAU TƯƠNG TÁC
 // Bắt đầu trò chơi khi trang tải xong
 window.onload = startNewLevel;
