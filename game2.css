@@ -110,3 +110,26 @@ h1 {
 .hidden {
     display: none !important;
 }
+
+/* ĐỊNH VỊ LOGO "TM 2011" Ở GÓC TRÊN BÊN TRÁI */
+.site-logo {
+    /* 1. Kích thước (Sếp có thể điều chỉnh 100px to/nhỏ tùy ý) */
+    width: 100px; 
+    height: auto;
+
+    /* 2. Định vị Tuyệt đối (Quan trọng nhất) */
+    position: absolute; /* Ghim logo vào vị trí cố định */
+    top: 20px;          /* Cách lề trên 20 pixels */
+    left: 20px;         /* Cách lề trái 20 pixels */
+    z-index: 1000;      /* Đảm bảo logo luôn nằm trên mọi nội dung khác */
+    
+    /* 3. Hiệu ứng Sci-Fi/Neon */
+    filter: drop-shadow(0 0 8px rgba(0, 192, 255, 0.8)); /* Hiệu ứng phát sáng */
+    transition: transform 0.3s ease-in-out; /* Chuyển động mượt */
+}
+
+/* (Optional) Hiệu ứng khi rê chuột vào */
+.site-logo:hover {
+    transform: scale(1.1); /* Phóng to nhẹ khi rê chuột */
+    cursor: url('cursorhand.png'), pointer;
+}
